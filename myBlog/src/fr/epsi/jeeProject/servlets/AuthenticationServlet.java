@@ -21,6 +21,8 @@ public class AuthenticationServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String nom = request.getParameter("nom");
+        request.getParameterMap().keySet().forEach(System.out::println);
+
         logger.info("oui");
         logger.info(nom);
         this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);

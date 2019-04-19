@@ -20,21 +20,22 @@
       <div id="signup">
         <h1>Sign Up</h1>
 
-        <form action="${pageContext.request.contextPath}/authentication" method="post">
+
+        <form action="Authentication" method="post">
 
           <div class="top-row">
             <div class="field-wrap">
               <label>
                 First Name<span class="req">*</span>
               </label>
-                <input type="text" name="nom" required autocomplete="off" />
+                <input type="text" name="firstname" required autocomplete="off" />
             </div>
 
             <div class="field-wrap">
               <label>
                 Last Name<span class="req">*</span>
               </label>
-                <input type="text" required autocomplete="off"/>
+                <input type="text" name="lastname" required autocomplete="off"/>
             </div>
           </div>
 
@@ -42,21 +43,21 @@
             <label>
               Email Address<span class="req">*</span>
             </label>
-              <input type="email" required autocomplete="off"/>
+              <input type="email" name="email" required autocomplete="off"/>
           </div>
 
           <div class="field-wrap">
             <label>
               Set A Password<span class="req">*</span>
             </label>
-              <input type="password" required autocomplete="off"/>
+              <input type="password" name="password" required autocomplete="off"/>
           </div>
 
           <div class="field-wrap">
             <label>
               Confirm Your Password<span class="req">*</span>
             </label>
-              <input type="password" required autocomplete="off"/>
+              <input type="password" name="confirm-password" required autocomplete="off"/>
           </div>
 
           <button type="submit" class="button button-block">Get Started</button>
@@ -68,7 +69,7 @@
       <div id="login">
         <h1>Welcome Back!</h1>
 
-        <form action="AuthenticationServlet" method="post">
+        <form action="Authentication" method="post">
 
           <div class="field-wrap">
             <label>

@@ -20,6 +20,7 @@ public class StartupListener implements ServletContextListener,
 
     // Public constructor is required by servlet spec
     public StartupListener() {
+
         MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
         ObjectName name = null;
 
