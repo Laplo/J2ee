@@ -77,14 +77,55 @@ public class UtilisateurDao implements IUtilisateurDao {
 
     @Override
     public void updateUtilisateur(Utilisateur utilisateur) throws SQLException {
-// TODO Auto-generated method stub
+        Connection con = null;
+        try {
+            con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost:9003", "SA", "d41d8cd98f00b204e9800998ecf8427e");
+            PreparedStatement ps = con.prepareStatement("UPDATE USERS SET NOM = ?, PASSWORD = ?, IS_ADMIN = ? WHERE EMAIL = ?");
+            ps.setString(1,utilisateur.getNom());
+            ps.setString(2,utilisateur.getPassword());
+            ps.setBoolean(3,utilisateur.getAdmin());
+            ps.setString(4,utilisateur.getEmail());
+            if (ps.executeUpdate() == 1) {
+                logger.info("Utilisateur " + utilisateur.getEmail() + " correctement mis à jour dans la base.");
+            } else {
+                logger.error("Erreur pendant la mise à jour de l'utilisateur " + utilisateur.getEmail() + ".");
+            }
+        } catch (SQLException e) {
+            logger.error("Error while getting user " + utilisateur.getEmail(),e);
+        } finally {
+            try {
+                if (con != null && !con.isClosed()) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                logger.warn("Error while closing connection");
+            }
+        }
 
     }
 
     @Override
     public void deleteUtilisateur(Utilisateur utilisateur) throws SQLException {
-// TODO Auto-generated method stub
-
+        Connection con = null;
+        try {
+            con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost:9003", "SA", "d41d8cd98f00b204e9800998ecf8427e");
+            PreparedStatement ps = con.prepareStatement("DELETE FROM USERS WHERE EMAIL = ?");
+            ps.setString(1,utilisateur.getEmail());
+            if (ps.executeUpdate() == 1) {
+                logger.info("Utilisateur " + utilisateur.getEmail() + " correctement mis à jour dans la base.");
+            } else {
+                logger.error("Erreur pendant la mise à jour de l'utilisateur " + utilisateur.getEmail() + ".");
+            }
+        } catch (SQLException e) {
+            logger.error("Error while getting user " + utilisateur.getEmail(), e);
+        } finally {
+            try {
+                if (con != null && !con.isClosed()) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                logger.warn("Error while closing connection");
+            }
+        }
     }
-
 }
