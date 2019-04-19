@@ -1,4 +1,4 @@
-package fr.epsi.jeeProject.dao;
+package fr.epsi.jeeProject.dao.interfaces;
 
 import java.sql.SQLException;
 

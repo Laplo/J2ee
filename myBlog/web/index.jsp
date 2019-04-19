@@ -20,7 +20,7 @@
       <div id="signup">
         <h1>Sign Up</h1>
 
-        <form action="AuthenticationServlet" method="post">
+        <form action="${pageContext.request.contextPath}/authentication" method="post">
 
           <div class="top-row">
             <div class="field-wrap">

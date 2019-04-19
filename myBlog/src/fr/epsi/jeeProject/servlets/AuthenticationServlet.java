@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/AuthenticationServlet")
+@WebServlet("/authentication")
 public class AuthenticationServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static final Logger logger = LogManager.getLogger(TestServlet.class);
@@ -23,10 +23,6 @@ public class AuthenticationServlet extends HttpServlet {
         String nom = request.getParameter("nom");
         logger.info("oui");
         logger.info(nom);
-        this.getServletContext().getRequestDispatcher("index.jsp").forward(request, response);
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        this.getServletContext().getRequestDispatcher("index.jsp").forward(request, response);
+        this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
     }
 }
