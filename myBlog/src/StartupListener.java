@@ -1,6 +1,8 @@
+import fr.epsi.jeeProject.jmx.Premier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.management.*;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
@@ -8,6 +10,7 @@ import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import javax.servlet.http.HttpSessionBindingEvent;
+import java.lang.management.ManagementFactory;
 
 @WebListener()
 public class StartupListener implements ServletContextListener,
@@ -17,6 +20,25 @@ public class StartupListener implements ServletContextListener,
 
     // Public constructor is required by servlet spec
     public StartupListener() {
+        MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
+        ObjectName name = null;
+
+        try {
+            name = new ObjectName("fr.epsi.jmx:type=PremierMBean");
+            Premier mbean = new Premier();
+
+            mbs.registerMBean(mbean, name);
+        } catch (MalformedObjectNameException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        } catch (InstanceAlreadyExistsException e) {
+            e.printStackTrace();
+        } catch (MBeanRegistrationException e) {
+            e.printStackTrace();
+        } catch (NotCompliantMBeanException e) {
+            e.printStackTrace();
+        }
     }
 
     // -------------------------------------------------------
