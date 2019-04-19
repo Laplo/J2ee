@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="hsqldb">
+    <CLASSES>
+      <root url="jar://D:/Java J2EE/Java J2EE/cours/hsqldb.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
