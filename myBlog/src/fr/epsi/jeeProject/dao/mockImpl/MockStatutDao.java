@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.epsi.jeeProject.beans.Statut;
-import fr.epsi.jeeProject.dao.IStatutDao;
+import fr.epsi.jeeProject.dao.interfaces.IStatutDao;
 
 public class MockStatutDao implements IStatutDao {
 

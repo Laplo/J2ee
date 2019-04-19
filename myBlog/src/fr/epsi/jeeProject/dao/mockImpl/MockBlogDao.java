@@ -8,9 +8,9 @@ import java.util.List;
 import fr.epsi.jeeProject.beans.Blog;
 import fr.epsi.jeeProject.beans.Reponse;
 import fr.epsi.jeeProject.beans.Utilisateur;
-import fr.epsi.jeeProject.dao.IBlogDao;
-import fr.epsi.jeeProject.dao.IStatutDao;
-import fr.epsi.jeeProject.dao.IUtilisateurDao;
+import fr.epsi.jeeProject.dao.interfaces.IBlogDao;
+import fr.epsi.jeeProject.dao.interfaces.IStatutDao;
+import fr.epsi.jeeProject.dao.interfaces.IUtilisateurDao;
 
 public class MockBlogDao implements IBlogDao {
 

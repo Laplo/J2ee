@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import fr.epsi.jeeProject.beans.Utilisateur;
-import fr.epsi.jeeProject.dao.IUtilisateurDao;
+import fr.epsi.jeeProject.dao.interfaces.IUtilisateurDao;
 
 public class MockUtilisateurDao implements IUtilisateurDao {
 

@@ -1,4 +1,4 @@
-package fr.epsi.jeeProject.dao.implemations;
+package fr.epsi.jeeProject.dao.HSQLImpl;
 
 public class PersistenceManager {
     private String driverName = "com.mysql.jdbc.Driver";

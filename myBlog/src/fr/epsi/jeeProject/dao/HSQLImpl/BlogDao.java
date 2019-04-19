@@ -1,4 +1,4 @@
-package fr.epsi.jeeProject.dao.implemations;
+package fr.epsi.jeeProject.dao.HSQLImpl;
 
 import fr.epsi.jeeProject.beans.Blog;
 import fr.epsi.jeeProject.beans.Reponse;

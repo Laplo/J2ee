@@ -6,7 +6,7 @@ public class Utilisateur {
 
 	private String email;
 	private String nom;
-	private String passord;
+	private String password;
 	private Date dateCreation;
 	private Boolean admin;
 	
@@ -22,11 +22,11 @@ public class Utilisateur {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	public String getPassord() {
-		return passord;
+	public String getPassword() {
+		return password;
 	}
-	public void setPassord(String passord) {
-		this.passord = passord;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	public Date getDateCreation() {
 		return dateCreation;
