@@ -11,10 +11,10 @@
 <html>
 <head>
     <meta charset="ISO-8859-1">
-    <title>My JSP Page</title>
+    <title>Bien connecté</title>
 </head>
 <body>
 
-<% out.println("Pute"); %>
+<% out.println("Bien connecté"); %>
 </body>
 </html>
