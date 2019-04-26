@@ -12,12 +12,13 @@ public class UtilisateurDao implements IUtilisateurDao {
     private static final Logger logger = LogManager.getLogger(UtilisateurDao.class);
 
     @Override
-    public Utilisateur getUtilisateur(String email) {
+    public Utilisateur getUtilisateur(String email) throws SQLException, ClassNotFoundException {
 
         Utilisateur myUser = null;
         Connection con = null;
+        Class.forName("org.hsqldb.jdbcDriver");
         try {
-            con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost:9003","SA","d41d8cd98f00b204e9800998ecf8427e");
+            con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003","SA","");
             PreparedStatement ps = con.prepareStatement("SELECT * FROM USERS WHERE email = ?");
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
@@ -26,6 +27,7 @@ public class UtilisateurDao implements IUtilisateurDao {
                 myUser.setEmail(rs.getString(1));
                 myUser.setNom(rs.getString(2));
                 myUser.setPassword(rs.getString(4));
+                System.out.println(myUser.getNom());
             }
             rs.close();
             con.close();
@@ -46,10 +48,11 @@ public class UtilisateurDao implements IUtilisateurDao {
     }
 
     @Override
-    public void createUtilisateur(Utilisateur utilisateur) throws SQLException {
+    public void createUtilisateur(Utilisateur utilisateur) throws SQLException, ClassNotFoundException {
         Connection con = null;
+        Class.forName("org.hsqldb.jdbcDriver");
         try {
-            con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost:9003", "SA", "d41d8cd98f00b204e9800998ecf8427e");
+            con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003", "SA", "");
             Date date = new java.sql.Date(new java.util.Date().getTime());
             PreparedStatement ps = con.prepareStatement("INSERT INTO USERS (EMAIL, NOM, DATE_CREATION, PASSWORD, IS_ADMIN) VALUES (?, ?, ?, ?, ?)");
             ps.setString(1,utilisateur.getEmail());

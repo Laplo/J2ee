@@ -9,11 +9,11 @@ import fr.epsi.jeeProject.beans.Utilisateur;
 
 public interface IBlogDao {
 
-	Blog getBlog(Integer id);
-	List<Blog> getBlogs(Utilisateur utilisateur);
-	Integer createBlog(Blog blog) throws SQLException;
-	void updateBlog(Blog blog) throws SQLException;
-	void deleteBlog(Blog blog) throws SQLException;
-	void addReponse(Blog blog, Reponse reponse) throws SQLException;
+	Blog getBlog(Integer id) throws SQLException, ClassNotFoundException;
+	List<Blog> getBlogs(Utilisateur utilisateur) throws SQLException, ClassNotFoundException;
+	Integer createBlog(Blog blog) throws SQLException, ClassNotFoundException;
+	void updateBlog(Blog blog) throws SQLException, ClassNotFoundException;
+	void deleteBlog(Blog blog) throws SQLException, ClassNotFoundException;
+	void addReponse(Blog blog, Reponse reponse) throws SQLException, ClassNotFoundException;
 	
 }

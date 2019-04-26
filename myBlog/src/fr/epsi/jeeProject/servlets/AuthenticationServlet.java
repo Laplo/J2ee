@@ -32,8 +32,10 @@ public class AuthenticationServlet extends HttpServlet {
         user.setEmail(request.getParameter("email"));
         user.setPassword(request.getParameter("password"));
         try {
-            new UtilisateurDao().createUtilisateur(user);
+            new UtilisateurDao().getUtilisateur("remi.castel@epsi.fr");
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
