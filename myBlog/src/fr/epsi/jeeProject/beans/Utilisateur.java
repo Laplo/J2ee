@@ -4,6 +4,13 @@ import java.sql.Date;
 
 public class Utilisateur {
 
+	public Utilisateur() {
+	}
+
+	public Utilisateur(String email) {
+		this.email = email;
+	}
+
 	private String email;
 	private String nom;
 	private String password;

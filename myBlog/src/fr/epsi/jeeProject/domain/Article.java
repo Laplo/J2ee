@@ -9,7 +9,7 @@ public class Article {
     private String title;
     private String body;
     private Date dateCreation;
-    private UserPrincipal proprietaire;
+    private int proprietaire;
 
     public String getTitle() {
         return title;
@@ -35,11 +35,11 @@ public class Article {
         this.dateCreation = dateCreation;
     }
 
-    public UserPrincipal getProprietaire() {
+    public int getProprietaire() {
         return proprietaire;
     }
 
-    public void setProprietaire(UserPrincipal proprietaire) {
+    public void setProprietaire(int proprietaire) {
         this.proprietaire = proprietaire;
     }
 }

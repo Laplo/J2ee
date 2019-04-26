@@ -1,7 +1,7 @@
 package fr.epsi.jeeProject.servlets;
 
-import fr.epsi.jeeProject.beans.Utilisateur;
-import fr.epsi.jeeProject.dao.HSQLImpl.UtilisateurDao;
+import fr.epsi.jeeProject.beans.Blog;
+import fr.epsi.jeeProject.dao.HSQLImpl.ArticleDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,33 +12,30 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
-@WebServlet("/Authentication")
-public class AuthenticationServlet extends HttpServlet {
+@WebServlet("/Login")
+public class LoginServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static final Logger logger = LogManager.getLogger(TestServlet.class);
 
-    public AuthenticationServlet() {
+    public LoginServlet() {
         super();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getParameterMap().keySet().forEach(System.out::println);
-
-        Utilisateur user = new Utilisateur();
-        user.setAdmin(false);
-        user.setNom(request.getParameter("lastname") + ' ' + request.getParameter("firstname"));
-        user.setEmail(request.getParameter("email"));
-        user.setPassword(request.getParameter("password"));
+        List<Blog> articleList = null;
         try {
-            new UtilisateurDao().getUtilisateur("remi.castel@epsi.fr");
+            articleList = new ArticleDao().getArticles();
+            articleList.forEach(article -> {
+                System.out.println("authentication get article " + article.getTitre());
+            });
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
-        this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
-        request.getParameterMap().keySet().forEach(System.out::println);
+        request.setAttribute("articles", articleList);
+        this.getServletContext().getRequestDispatcher("/Blog.jsp").forward(request, response);
     }
 }

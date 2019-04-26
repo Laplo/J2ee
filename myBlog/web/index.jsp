@@ -69,7 +69,7 @@
       <div id="login">
         <h1>Welcome Back!</h1>
 
-        <form action="Authentication" method="post">
+        <form action="Login" method="post">
 
           <div class="field-wrap">
             <label>
