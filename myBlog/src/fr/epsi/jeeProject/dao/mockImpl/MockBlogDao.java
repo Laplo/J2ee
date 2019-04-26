@@ -19,7 +19,7 @@ public class MockBlogDao implements IBlogDao {
 	private IStatutDao statutDao = new MockStatutDao();
 	
 	@Override
-	public Blog getBlog(Integer id) {
+	public Blog getBlog(Integer id) throws SQLException, ClassNotFoundException {
 		for (Blog b : getBlogs()) {
 			if (b.getId().intValue() == id.intValue()) {
 				return b;
@@ -29,7 +29,7 @@ public class MockBlogDao implements IBlogDao {
 	}
 
 	@Override
-	public List<Blog> getBlogs(Utilisateur utilisateur) {
+	public List<Blog> getBlogs(Utilisateur utilisateur) throws SQLException, ClassNotFoundException {
 		List<Blog> myBlogs = new ArrayList<Blog>();
 		for (Blog b : getBlogs()) {
 			if (b.getCreateur().getEmail().equals(utilisateur.getEmail())) {
@@ -42,7 +42,7 @@ public class MockBlogDao implements IBlogDao {
 	}
 
 	@Override
-	public Integer createBlog(Blog blog) throws SQLException {
+	public Integer createBlog(Blog blog) throws SQLException, ClassNotFoundException {
 		int max = 0;
 		for (Blog b : getBlogs()) {
 			if (b.getId().intValue() > max) {
@@ -55,7 +55,7 @@ public class MockBlogDao implements IBlogDao {
 	}
 
 	@Override
-	public void updateBlog(Blog blog) throws SQLException {
+	public void updateBlog(Blog blog) throws SQLException, ClassNotFoundException {
 		for (Blog b : getBlogs()) {
 			if (b.getId().intValue() == blog.getId().intValue()) {
 				b.setTitre(blog.getTitre());
@@ -66,7 +66,7 @@ public class MockBlogDao implements IBlogDao {
 	}
 
 	@Override
-	public void deleteBlog(Blog blog) throws SQLException {
+	public void deleteBlog(Blog blog) throws SQLException, ClassNotFoundException {
 		for (Blog b : getBlogs()) {
 			if (b.getId().intValue() == blog.getId().intValue()) {
 				getBlogs().remove(b);
@@ -76,7 +76,7 @@ public class MockBlogDao implements IBlogDao {
 	}
 
 	@Override
-	public void addReponse(Blog blog, Reponse reponse) throws SQLException {
+	public void addReponse(Blog blog, Reponse reponse) throws SQLException, ClassNotFoundException {
 		for (Blog b : getBlogs()) {
 			if (b.getId().intValue() == blog.getId().intValue()) {
 				if (b.getListOfReponses() == null) {
@@ -88,7 +88,7 @@ public class MockBlogDao implements IBlogDao {
 		}
 	}
 	
-	private List<Blog> getBlogs() {
+	private List<Blog> getBlogs() throws SQLException, ClassNotFoundException {
 		if (listOfBlogs == null) {
 			listOfBlogs = new ArrayList<Blog>();
 			Blog blog = new Blog();
