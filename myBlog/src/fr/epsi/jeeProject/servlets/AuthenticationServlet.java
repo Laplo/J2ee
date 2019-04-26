@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 @WebServlet("/Authentication")
 public class AuthenticationServlet extends HttpServlet {
@@ -38,6 +39,7 @@ public class AuthenticationServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        this.getServletContext().getRequestDispatcher("/TestJSP.jsp").forward(request, response);
+        // request.setAttribute("articles", articleList);
+        this.getServletContext().getRequestDispatcher("/Blog.jsp").forward(request, response);
     }
 }

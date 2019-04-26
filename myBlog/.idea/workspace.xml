@@ -25,29 +25,7 @@
     <option name="HIDDEN_KINDS">
       <set />
     </option>
-    <expand>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="HSQLDB (Local) - db" type="feb32156:DbDataSourceImpl" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="HSQLDB (Local) - db" type="feb32156:DbDataSourceImpl" />
-        <item name="PUBLIC: database" type="5208c322:HsqlImplModel$Database" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="HSQLDB (Local) - db" type="feb32156:DbDataSourceImpl" />
-        <item name="PUBLIC: database" type="5208c322:HsqlImplModel$Database" />
-        <item name="PUBLIC: schema" type="d266ad14:HsqlImplModel$Schema" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="HSQLDB (Local) - db" type="feb32156:DbDataSourceImpl" />
-        <item name="PUBLIC: database" type="5208c322:HsqlImplModel$Database" />
-        <item name="SYSTEM_LOBS: schema" type="d266ad14:HsqlImplModel$Schema" />
-      </path>
-    </expand>
+    <expand />
     <select />
   </component>
   <component name="DefaultGradleProjectSettings">
@@ -61,19 +39,21 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/index.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="17" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="17" />
+            <state relative-caret-position="170">
+              <caret line="10" column="8" lean-forward="true" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="8" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/fr/epsi/jeeProject/servlets/AuthenticationServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="34" column="48" selection-start-line="34" selection-start-column="48" selection-end-line="34" selection-end-column="48" />
+            <state relative-caret-position="291">
+              <caret line="41" column="57" lean-forward="true" selection-start-line="41" selection-start-column="57" selection-end-line="41" selection-end-column="57" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#756#757#0" expanded="true" />
+                <element signature="e#779#780#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -97,20 +77,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/fr/epsi/jeeProject/dao/HSQLImpl/UtilisateurDao.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="29" column="50" selection-start-line="29" selection-start-column="50" selection-end-line="29" selection-end-column="50" />
+            <state>
+              <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/14226017-559e-4986-b7ea-64ae7656efd2/console.sql">
+        <entry file="file://$PROJECT_DIR$/src/fr/epsi/jeeProject/dao/mockImpl/MockBlogDao.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="85" lean-forward="true" selection-start-line="8" selection-start-column="85" selection-end-line="8" selection-end-column="85" />
+            <state relative-caret-position="448">
+              <caret line="58" column="28" lean-forward="true" selection-start-line="58" selection-start-column="28" selection-end-line="58" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -128,7 +108,7 @@
         <entry file="file://$PROJECT_DIR$/web/TestJSP.jsp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="221">
-              <caret line="13" column="30" selection-start-line="13" selection-start-column="30" selection-end-line="13" selection-end-column="30" />
+              <caret line="13" column="24" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -178,8 +158,9 @@
         <option value="$PROJECT_DIR$/src/StartupListener.java" />
         <option value="$PROJECT_DIR$/web/index.jsp" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/14226017-559e-4986-b7ea-64ae7656efd2/console.sql" />
-        <option value="$PROJECT_DIR$/src/fr/epsi/jeeProject/servlets/AuthenticationServlet.java" />
+        <option value="$PROJECT_DIR$/src/fr/epsi/jeeProject/dao/mockImpl/MockBlogDao.java" />
         <option value="$PROJECT_DIR$/src/fr/epsi/jeeProject/dao/HSQLImpl/UtilisateurDao.java" />
+        <option value="$PROJECT_DIR$/src/fr/epsi/jeeProject/servlets/AuthenticationServlet.java" />
       </list>
     </option>
   </component>
@@ -301,7 +282,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.applicationServers" />
@@ -432,12 +413,12 @@
       <workItem from="1556179215243" duration="746000" />
       <workItem from="1556180450465" duration="149000" />
       <workItem from="1556208764109" duration="110000" />
-      <workItem from="1556266323181" duration="2515000" />
+      <workItem from="1556266323181" duration="4569000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30925000" />
+    <option name="totallyTimeSpent" value="32979000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -473,7 +454,7 @@
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.3286119" />
       <window_info anchor="bottom" id="Java Enterprise" order="12" weight="0.32959184" />
-      <window_info anchor="bottom" id="Database Changes" order="13" />
+      <window_info anchor="bottom" id="Database Changes" order="13" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="14" />
       <window_info anchor="bottom" id="Database Console" order="15" weight="0.3286119" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -611,13 +592,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/fr/epsi/jeeProject/dao/mockImpl/MockBlogDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="24" column="25" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://D:/Téléchargements/apache-tomcat-9.0.17-windows-x64/apache-tomcat-9.0.17/lib/servlet-api.jar!/javax/servlet/ServletRequest.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
@@ -654,13 +628,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/TestJSP.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="30" selection-start-line="13" selection-start-column="30" selection-end-line="13" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/fr/epsi/jeeProject/dao/mockImpl/MockUtilisateurDao.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="901">
@@ -672,13 +639,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="8" column="85" lean-forward="true" selection-start-line="8" selection-start-column="85" selection-end-line="8" selection-end-column="85" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/index.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="17" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -696,20 +656,43 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/fr/epsi/jeeProject/servlets/AuthenticationServlet.java">
+    <entry file="file://$PROJECT_DIR$/src/fr/epsi/jeeProject/dao/mockImpl/MockBlogDao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="34" column="48" selection-start-line="34" selection-start-column="48" selection-end-line="34" selection-end-column="48" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="448">
+          <caret line="58" column="28" lean-forward="true" selection-start-line="58" selection-start-column="28" selection-end-line="58" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/TestJSP.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="24" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/index.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="8" lean-forward="true" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/fr/epsi/jeeProject/dao/HSQLImpl/UtilisateurDao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="29" column="50" selection-start-line="29" selection-start-column="50" selection-end-line="29" selection-end-column="50" />
+        <state>
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/fr/epsi/jeeProject/servlets/AuthenticationServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="41" column="57" lean-forward="true" selection-start-line="41" selection-start-column="57" selection-end-line="41" selection-end-column="57" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#756#757#0" expanded="true" />
+            <element signature="e#779#780#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -724,6 +707,7 @@
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.5" />
               </list>
             </option>
           </splitter-proportions>
