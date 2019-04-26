@@ -29,7 +29,7 @@ public class ArticleDao implements IArticleDao {
                 Blog article = new Blog();
                 article.setDescription(rs.getString("description"));
                 article.setTitre(rs.getString("titre"));
-                article.setCreateur(new Utilisateur(rs.getString("email")));
+                article.setCreateur(new UtilisateurDao().getUtilisateur(rs.getString("email")));
                 article.setDateCreation(rs.getDate("date_creation"));
                 article.setDateModification(rs.getDate("date_modification"));
                 articles.add(article);

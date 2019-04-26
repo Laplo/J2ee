@@ -6,10 +6,39 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UtilisateurDao implements IUtilisateurDao {
 
     private static final Logger logger = LogManager.getLogger(UtilisateurDao.class);
+
+    @Override
+    public List<Utilisateur> getUtilisateurs() throws SQLException, ClassNotFoundException {
+        List<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
+        Connection con = null;
+        Class.forName("org.hsqldb.jdbcDriver");
+        try {
+            con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003", "SA", "");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM USERS");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Utilisateur utilisateur = createUtilisateur(rs);
+                utilisateurs.add(utilisateur);
+            }
+        } catch (SQLException e) {
+            logger.error("Error while getting users ", e);
+        } finally {
+            try {
+                if (con != null && !con.isClosed()) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                logger.warn("Error while closing connection");
+            }
+        }
+        return utilisateurs;
+    }
 
     @Override
     public Utilisateur getUtilisateur(String email) throws SQLException, ClassNotFoundException {
@@ -23,11 +52,7 @@ public class UtilisateurDao implements IUtilisateurDao {
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                myUser = new Utilisateur();
-                myUser.setEmail(rs.getString(1));
-                myUser.setNom(rs.getString(2));
-                myUser.setPassword(rs.getString(4));
-                System.out.println(myUser.getNom());
+                myUser = createUtilisateur(rs);
             }
             rs.close();
             con.close();
@@ -130,5 +155,15 @@ public class UtilisateurDao implements IUtilisateurDao {
                 logger.warn("Error while closing connection");
             }
         }
+    }
+
+    @Override
+    public Utilisateur createUtilisateur(ResultSet rs) throws SQLException {
+        Utilisateur myUser = new Utilisateur();
+        myUser.setEmail(rs.getString(1));
+        myUser.setNom(rs.getString(2));
+        myUser.setPassword(rs.getString(4));
+        System.out.println(myUser.getNom());
+        return myUser;
     }
 }
