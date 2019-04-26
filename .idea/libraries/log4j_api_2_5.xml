@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="hsqldb">
+  <library name="log4j-api-2.5">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../hsqldb.jar!/" />
+      <root url="jar://$USER_HOME$/Desktop/log4j-api-2.5.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

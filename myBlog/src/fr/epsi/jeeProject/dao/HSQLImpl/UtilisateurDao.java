@@ -82,7 +82,7 @@ public class UtilisateurDao implements IUtilisateurDao {
     public void updateUtilisateur(Utilisateur utilisateur) throws SQLException {
         Connection con = null;
         try {
-            con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost:9003", "SA", "d41d8cd98f00b204e9800998ecf8427e");
+            con = DriverManager.getConnection("jdbc:hsqldb:file:C:/Users/Remi-/Desktop/db/HSQLDB6911D24090", "SA", "d41d8cd98f00b204e9800998ecf8427e");
             PreparedStatement ps = con.prepareStatement("UPDATE USERS SET NOM = ?, PASSWORD = ?, IS_ADMIN = ? WHERE EMAIL = ?");
             ps.setString(1,utilisateur.getNom());
             ps.setString(2,utilisateur.getPassword());
@@ -111,7 +111,7 @@ public class UtilisateurDao implements IUtilisateurDao {
     public void deleteUtilisateur(Utilisateur utilisateur) throws SQLException {
         Connection con = null;
         try {
-            con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost:9003", "SA", "d41d8cd98f00b204e9800998ecf8427e");
+            con = DriverManager.getConnection("jdbc:hsqldb:file:C:/Users/Remi-/Desktop/db/HSQLDB6911D24090", "SA", "d41d8cd98f00b204e9800998ecf8427e");
             PreparedStatement ps = con.prepareStatement("DELETE FROM USERS WHERE EMAIL = ?");
             ps.setString(1,utilisateur.getEmail());
             if (ps.executeUpdate() == 1) {
