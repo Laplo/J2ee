@@ -1,9 +1,8 @@
 package fr.epsi.jeeProject.jmx;
 
 public interface PremierMBean {
-    public String getNom();
-    public int getValeur();
-    public void setValeur(int valeur);
-    public void rafraichir();
+    String getNom();
+    int getValeur();
+    void setValeur(int valeur);
+    void rafraichir();
 }
-
