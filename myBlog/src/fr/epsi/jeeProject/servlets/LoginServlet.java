@@ -65,8 +65,8 @@ public class LoginServlet extends HttpServlet {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            request.setAttribute("articles", articleList);
-            this.getServletContext().getRequestDispatcher("/Blog.jsp").forward(request, response);
+            request.getSession().setAttribute("articles", articleList);
+            response.sendRedirect("/myEpsi/Blog");
         }
     }
 }

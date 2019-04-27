@@ -7,19 +7,19 @@
 <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,300,700' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <html>
+<% Blog blog = (Blog) request.getAttribute("article");
+    String email = (String) session.getAttribute("user_email");
+    System.out.println("email article jsp");
+    System.out.println(email);
+    System.out.println("email article createur");
+    System.out.println(blog.getCreateur().getEmail());%>
 <head>
-    <title></title>
+    <title><% out.print(blog.getTitre());%></title>
 </head>
 <body>
 
 <div class="wrapper">
     <div class="top"><div class="title"><h1>EPSI Blog</h1></div></div>
-    <% Blog blog = (Blog) request.getAttribute("article");
-      String email = (String) session.getAttribute("user_email");
-      System.out.println("email article jsp");
-      System.out.println(email);
-      System.out.println("email article createur");
-      System.out.println(blog.getCreateur().getEmail());%>
     <div class="content">
         <div class="card first">
             <h2 class="astyle"><% out.print(blog.getTitre()); %>

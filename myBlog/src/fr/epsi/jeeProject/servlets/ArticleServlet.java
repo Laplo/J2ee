@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -26,6 +27,13 @@ public class ArticleServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        HttpSession session = request.getSession();
+        if(session.getAttribute("user_email") == null) {
+            this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+            return;
+        }
+
         try {
             Blog article = new ArticleDao().getArticle(Integer.parseInt(request.getParameter("id")));
             request.setAttribute("article", article);
