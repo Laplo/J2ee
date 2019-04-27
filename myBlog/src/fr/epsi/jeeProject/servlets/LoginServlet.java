@@ -52,7 +52,7 @@ public class LoginServlet extends HttpServlet {
             this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
         } else {
             HttpSession session = request.getSession();
-            session.setAttribute("user_mail", request.getParameter("login-email"));
+            session.setAttribute("user_email", request.getParameter("login-email"));
             List<Blog> articleList = null;
 
             try {

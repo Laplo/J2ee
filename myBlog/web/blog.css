@@ -50,9 +50,12 @@ body{
     font-weight:500;
 }
 
-.card h2 a {
+a {
+    text-decoration: none;
+}
+
+.astyle {
     color:#CC0000;
-    text-decoration:none;
 }
 
 .card .date {
