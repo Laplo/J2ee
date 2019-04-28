@@ -35,6 +35,10 @@ public class ArticleServlet extends HttpServlet {
         }
         if (request.getParameter("id") == null) {
             if (request.getParameter("delete") != null) {
+                if (!((boolean) session.getAttribute("user_isAdmin"))) {
+                    this.getServletContext().getRequestDispatcher("/NotAccess.jsp").forward(request, response);
+                    return;
+                }
                 try {
                     new ArticleDao().deleteArticle(Integer.parseInt(request.getParameter("delete")));
                 } catch (ClassNotFoundException e) {
