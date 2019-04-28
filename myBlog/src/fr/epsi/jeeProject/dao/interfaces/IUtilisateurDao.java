@@ -10,6 +10,8 @@ public interface IUtilisateurDao {
 
 	List<Utilisateur> getUtilisateurs() throws SQLException, ClassNotFoundException;
 
+	List<Utilisateur> getNonAdminUtilisateurs() throws ClassNotFoundException;
+
 	Utilisateur getUtilisateur(String email) throws ClassNotFoundException, SQLException;
 	void createUtilisateur(Utilisateur utilisateur) throws SQLException, ClassNotFoundException;
 	void updateUtilisateur(Utilisateur utilisateur) throws SQLException;

@@ -19,6 +19,11 @@ public class MockUtilisateurDao implements IUtilisateurDao {
 	}
 
 	@Override
+	public List<Utilisateur> getNonAdminUtilisateurs() throws ClassNotFoundException {
+		return null;
+	}
+
+	@Override
 	public Utilisateur getUtilisateur(String email) {
 		for (Utilisateur u : getListOfUtilisateur()) {
 			if (u.getEmail().equals(email))

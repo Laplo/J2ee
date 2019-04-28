@@ -13,13 +13,20 @@
   <title>EPSI Blog</title>
 </head>
 <body>
-
+  <%boolean isAdmin = (boolean) session.getAttribute("user_isAdmin");%>
   <div class="wrapper">
     <div class="top">
-      <div class="title"><h1>EPSI Blog</h1></div>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="float: right;">
-        Créer
-      </button>
+      <div class="title">
+        <h1>
+          EPSI Blog
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="float: right;">
+            Créer
+          </button>
+          <% if (isAdmin == true) {%>
+          <a href="Admin">admin</a>
+          <% } %>
+        </h1>
+      </div>
     </div>
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -56,10 +63,10 @@
         <div class="card">
         <% } %>
           <h2 class="astyle">
-            <a href="/myEpsi/Article?id=<%=blog.getId()%>"><% out.print(blog.getTitre()); %></a>
-            <% if (email.compareTo(blog.getCreateur().getEmail()) == 0) { %>
-              <i class="glyphicon glyphicon-user" style="float: right"></i>
+            <% if (email.compareTo(blog.getCreateur().getEmail()) != 0) { %>
+              <i class="glyphicon glyphicon-user"></i>
             <% } %>
+            <a href="/myEpsi/Article?id=<%=blog.getId()%>"><% out.print(blog.getTitre()); %></a>
           </h2>
           <p class="date">
             <%
@@ -71,6 +78,9 @@
             %>
           </p>
           <p class="text"><% out.print(blog.getDescription()); %></p>
+          <% if (email.compareTo(blog.getCreateur().getEmail()) != 0) { %>
+            <button class="btn btn-primary">Commenter</button>
+          <% } %>
         </div>
       </div>
     <% } %>

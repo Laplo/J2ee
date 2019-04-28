@@ -41,6 +41,33 @@ public class UtilisateurDao implements IUtilisateurDao {
     }
 
     @Override
+    public List<Utilisateur> getNonAdminUtilisateurs() throws ClassNotFoundException {
+        List<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
+        Connection con = null;
+        Class.forName("org.hsqldb.jdbcDriver");
+        try {
+            con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003", "SA", "");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM USERS WHERE IS_ADMIN = false");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Utilisateur utilisateur = createUtilisateur(rs);
+                utilisateurs.add(utilisateur);
+            }
+        } catch (SQLException e) {
+            logger.error("Error while getting users ", e);
+        } finally {
+            try {
+                if (con != null && !con.isClosed()) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                logger.warn("Error while closing connection");
+            }
+        }
+        return utilisateurs;
+    }
+
+    @Override
     public Utilisateur getUtilisateur(String email) throws SQLException, ClassNotFoundException {
 
         Utilisateur myUser = null;
@@ -163,6 +190,7 @@ public class UtilisateurDao implements IUtilisateurDao {
         myUser.setEmail(rs.getString(1));
         myUser.setNom(rs.getString(2));
         myUser.setPassword(rs.getString(4));
+        myUser.setAdmin(rs.getBoolean(5));
         System.out.println(myUser.getNom());
         return myUser;
     }

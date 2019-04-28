@@ -37,12 +37,14 @@ public class LoginServlet extends HttpServlet {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+        HttpSession session = request.getSession();
 
         boolean isIn = false;
         for (int i = 0; i < utilisateurs.size(); i++) {
             if (request.getParameter("login-password").compareTo(utilisateurs.get(i).getPassword()) == 0
                 && request.getParameter("login-email").compareTo(utilisateurs.get(i).getEmail()) == 0) {
                 isIn = true;
+                session.setAttribute("user_isAdmin", utilisateurs.get(i).getAdmin());
                 break;
             }
         }
@@ -51,7 +53,6 @@ public class LoginServlet extends HttpServlet {
             logger.error(request.getParameter("login-email") + " tried to connect but wrong credentials");
             this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
         } else {
-            HttpSession session = request.getSession();
             session.setAttribute("user_email", request.getParameter("login-email"));
             List<Blog> articleList = null;
 
