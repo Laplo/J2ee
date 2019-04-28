@@ -24,9 +24,7 @@
             <div>
                 <%out.print(utilisateurs.get(i).getNom()); %>
                 <button>Modifier</button>
-                <form action="Utilisateur?delete=<%utilisateurs.get(i).getEmail();%>">
-                    <button>Supprimer</button>
-                </form>
+                <a href="/myEpsi/Utilisateur?delete=<%=utilisateurs.get(i).getEmail()%>">Supprimer</a>
             </div>
     <%  }
         for (int i = 0; i < articles.size(); i++) {

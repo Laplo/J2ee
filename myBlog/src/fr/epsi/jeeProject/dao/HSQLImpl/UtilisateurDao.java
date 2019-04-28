@@ -163,13 +163,13 @@ public class UtilisateurDao implements IUtilisateurDao {
     public void deleteUtilisateur(Utilisateur utilisateur) throws SQLException {
         Connection con = null;
         try {
-            con = DriverManager.getConnection("jdbc:hsqldb:file:C:/Users/Remi-/Desktop/db/HSQLDB6911D24090", "SA", "d41d8cd98f00b204e9800998ecf8427e");
+            con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003", "SA", "");
             PreparedStatement ps = con.prepareStatement("DELETE FROM USERS WHERE EMAIL = ?");
             ps.setString(1,utilisateur.getEmail());
             if (ps.executeUpdate() == 1) {
-                logger.info("Utilisateur " + utilisateur.getEmail() + " correctement mis à jour dans la base.");
+                logger.info("Utilisateur " + utilisateur.getEmail() + " correctement supprimé.");
             } else {
-                logger.error("Erreur pendant la mise à jour de l'utilisateur " + utilisateur.getEmail() + ".");
+                logger.error("Erreur pendant la suppression de l'utilisateur " + utilisateur.getEmail() + ".");
             }
         } catch (SQLException e) {
             logger.error("Error while getting user " + utilisateur.getEmail(), e);
