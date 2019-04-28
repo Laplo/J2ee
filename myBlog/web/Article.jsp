@@ -19,7 +19,7 @@
 <body>
 
 <div class="wrapper">
-    <div class="top"><div class="title"><h1>EPSI Blog</h1></div></div>
+    <div class="top"><div class="title"><h1><% out.print(blog.getTitre());%></h1></div></div>
     <div class="content">
         <div class="card first">
             <h2 class="astyle"><% out.print(blog.getTitre()); %>

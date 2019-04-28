@@ -80,6 +80,42 @@ public class ArticleDao implements IArticleDao {
     }
 
     @Override
+    public void createArticle(Blog blog) throws ClassNotFoundException, SQLException {
+        List<Blog> articles = new ArrayList<Blog>();
+
+        Connection con = null;
+
+        Class.forName("org.hsqldb.jdbcDriver");
+        try {
+            con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003", "SA", "");
+            PreparedStatement ps = con.prepareStatement("INSERT INTO BLOG (TITRE, DESCRIPTION, EMAIL, DATE_CREATION, DATE_MODIFICATION, STATUT)" +
+                                                            " VALUES (?, ?, ?, ?, ?, ?)");
+            ps.setString(1, blog.getTitre());
+            ps.setString(2, blog.getDescription());
+            ps.setString(3, blog.getCreateur().getEmail());
+            ps.setDate(4, blog.getDateCreation());
+            ps.setDate(5, blog.getDateModification());
+            ps.setInt(6, blog.getStatut().getId());
+
+            if (ps.executeUpdate() == 1) {
+                logger.info("Blog " + blog.getTitre() + " correctement inseré dans la base.");
+            } else {
+                logger.error("Erreur pendant l'insertion du blog " + blog.getTitre() + ".");
+            }
+        } catch (SQLException e) {
+            logger.error("Error while getting articles ", e);
+        } finally {
+            try {
+                if (con != null && !con.isClosed()) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                logger.warn("Error while closing connection");
+            }
+        }
+    }
+
+    @Override
     public Blog createArticle(ResultSet rs) throws SQLException, ClassNotFoundException {
         Blog article = new Blog();
         article.setId(rs.getInt("id"));

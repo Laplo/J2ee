@@ -11,5 +11,7 @@ public interface IArticleDao {
 
     Blog getArticle(int id) throws SQLException, ClassNotFoundException;
 
+    void createArticle(Blog blog) throws ClassNotFoundException, SQLException;
+
     Blog createArticle(ResultSet rs) throws SQLException, ClassNotFoundException;
 }
