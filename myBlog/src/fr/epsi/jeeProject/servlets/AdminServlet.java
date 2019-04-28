@@ -35,6 +35,8 @@ public class AdminServlet extends HttpServlet {
             List<Utilisateur> utilisateurs = new UtilisateurDao().getNonAdminUtilisateurs();
             List<Blog> articles = new ArticleDao().getArticles();
 
+            articles.forEach(article -> System.out.println(article.getId()));
+
             request.setAttribute("articles", articles);
             request.setAttribute("utilisateurs", utilisateurs);
         } catch (ClassNotFoundException | SQLException e) {

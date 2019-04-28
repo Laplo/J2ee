@@ -27,14 +27,17 @@ public class BlogServlet extends HttpServlet {
         Date date = new java.sql.Date(new java.util.Date().getTime());
         blog.setDateCreation(date);
         blog.setDateModification(date);
-        List<Blog> articles = (List<Blog>)request.getSession().getAttribute("articles");
+        List<Blog> articles = null;
+        try {
+            articles = new ArticleDao().getArticles();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         try {
             blog.setCreateur(new UtilisateurDao().getUtilisateur((String) request.getSession().getAttribute("user_email")));
             new ArticleDao().createArticle(blog);
             articles.add(0, blog);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
         request.setAttribute("articles", articles);
@@ -43,7 +46,11 @@ public class BlogServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("do get Blog");
-        request.setAttribute("articles", request.getSession().getAttribute("articles"));
+        try {
+            request.setAttribute("articles", new ArticleDao().getArticles());
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         this.getServletContext().getRequestDispatcher("/Blog.jsp").forward(request, response);
     }
 }

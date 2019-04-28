@@ -33,16 +33,25 @@ public class ArticleServlet extends HttpServlet {
             this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
             return;
         }
-
-        try {
-            Blog article = new ArticleDao().getArticle(Integer.parseInt(request.getParameter("id")));
-            request.setAttribute("article", article);
-            this.getServletContext().getRequestDispatcher("/Article.jsp").forward(request, response);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        if (request.getParameter("id") == null) {
+            if (request.getParameter("delete") != null) {
+                try {
+                    new ArticleDao().deleteArticle(Integer.parseInt(request.getParameter("delete")));
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                response.sendRedirect("/myEpsi/Admin");
+            }
+        } else {
+            try {
+                Blog article = new ArticleDao().getArticle(Integer.parseInt(request.getParameter("id")));
+                request.setAttribute("article", article);
+                this.getServletContext().getRequestDispatcher("/Article.jsp").forward(request, response);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
-
     }
 }

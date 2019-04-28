@@ -10,23 +10,32 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Admin</title>
 </head>
 <body>
+    <a href="/myEpsi/Blog">Retour à la page d'accueil</a>
     <%
         List<Blog> articles = (List<Blog>) request.getAttribute("articles");
         List<Utilisateur> utilisateurs = (List<Utilisateur>) request.getAttribute("utilisateurs");
-        for (int i = 0; i < utilisateurs.size(); i++) { %>
+        for (int i = 0; i < utilisateurs.size(); i++) {
+            if (i == 0) { %>
+                <h2>Utilisateurs</h2>
+            <% } %>
             <div>
                 <%out.print(utilisateurs.get(i).getNom()); %>
                 <button>Modifier</button>
-                <button>Supprimer</button>
+                <form action="Utilisateur?delete=<%utilisateurs.get(i).getEmail();%>">
+                    <button>Supprimer</button>
+                </form>
             </div>
     <%  }
-        for (int i = 0; i < articles.size(); i++) { %>
+        for (int i = 0; i < articles.size(); i++) {
+            if (i == 0) { %>
+                <h2>Articles</h2>
+            <% } %>
             <div>
                 <%out.print(articles.get(i).getTitre()); %>
-                <button>Supprimer</button>
+                <a href="/myEpsi/Article?delete=<%=articles.get(i).getId()%>">Supprimer</a>
             </div>
     <%  } %>
 </body>

@@ -116,6 +116,34 @@ public class ArticleDao implements IArticleDao {
     }
 
     @Override
+    public void deleteArticle (int id) throws ClassNotFoundException {
+
+        Connection con = null;
+
+        Class.forName("org.hsqldb.jdbcDriver");
+        try {
+            con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003", "SA", "");
+            PreparedStatement ps = con.prepareStatement("DELETE FROM BLOG WHERE ID = ?");
+            ps.setInt(1, id);
+            if (ps.executeUpdate() == 1) {
+                logger.info("Blog " + id + " correctement supprimé");
+            } else {
+                logger.error("Erreur pendant la suppression du blog " + id + ".");
+            }
+        } catch (SQLException e) {
+            logger.error("Error while getting articles ", e);
+        } finally {
+            try {
+                if (con != null && !con.isClosed()) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                logger.warn("Error while closing connection");
+            }
+        }
+    }
+
+    @Override
     public Blog createArticle(ResultSet rs) throws SQLException, ClassNotFoundException {
         Blog article = new Blog();
         article.setId(rs.getInt("id"));
