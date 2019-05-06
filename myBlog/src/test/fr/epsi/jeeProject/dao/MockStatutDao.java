@@ -1,4 +1,4 @@
-package fr.epsi.jeeProject.dao.mockImpl;
+package test.fr.epsi.jeeProject.dao;
 
 import java.util.ArrayList;
 import java.util.List;

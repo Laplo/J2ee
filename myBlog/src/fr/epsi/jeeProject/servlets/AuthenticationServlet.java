@@ -24,6 +24,7 @@ public class AuthenticationServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        logger.info("Execution doPost " + this.getClass().toString());
         request.getParameterMap().keySet().forEach(System.out::println);
 
         Utilisateur user = new Utilisateur();
@@ -39,8 +40,8 @@ public class AuthenticationServlet extends HttpServlet {
             }
 
             List<Utilisateur> utilisateurs = new UtilisateurDao().getUtilisateurs();
-            for (int i = 0; i < utilisateurs.size(); i++) {
-                if (utilisateurs.get(i).getEmail().compareTo(user.getEmail()) == 0) {
+            for (Utilisateur utilisateur : utilisateurs) {
+                if (utilisateur.getEmail().compareTo(user.getEmail()) == 0) {
                     logger.error("Un utilisateur possède déjà cet email");
                     this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
                     return;
@@ -48,9 +49,6 @@ public class AuthenticationServlet extends HttpServlet {
             }
 
             new UtilisateurDao().createUtilisateur(user);
-        } catch (SQLException e) {
-            logger.error(e);
-            e.printStackTrace();
         } catch (ClassNotFoundException e) {
             logger.error(e);
             e.printStackTrace();

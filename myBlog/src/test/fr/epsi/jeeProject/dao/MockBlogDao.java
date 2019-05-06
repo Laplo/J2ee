@@ -1,4 +1,4 @@
-package fr.epsi.jeeProject.dao.mockImpl;
+package test.fr.epsi.jeeProject.dao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

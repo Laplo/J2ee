@@ -2,6 +2,8 @@ package fr.epsi.jeeProject.servlets;
 
 import fr.epsi.jeeProject.beans.Utilisateur;
 import fr.epsi.jeeProject.dao.HSQLImpl.UtilisateurDao;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,11 +16,15 @@ import java.sql.SQLException;
 
 @WebServlet("/Utilisateur")
 public class UtilisateurServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+    private static final Logger logger = LogManager.getLogger(AuthenticationServlet.class);
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        logger.info("Execution doPost " + this.getClass().toString());
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        logger.info("Execution doGet " + this.getClass().toString());
         HttpSession session = request.getSession();
 
         if(session.getAttribute("user_email") == null) {
@@ -32,12 +38,8 @@ public class UtilisateurServlet extends HttpServlet {
         }
 
         if (request.getParameter("delete") != null) {
-            try {
-                new UtilisateurDao().deleteUtilisateur(new Utilisateur(request.getParameter("delete")));
-                response.sendRedirect("/myEpsi/Admin");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            new UtilisateurDao().deleteUtilisateur(new Utilisateur(request.getParameter("delete")));
+            response.sendRedirect("/myEpsi/Admin");
         }
     }
 }

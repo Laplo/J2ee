@@ -23,11 +23,11 @@ public class ArticleServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        logger.info("Article servlet doPost");
+        logger.info("Execution doPost " + this.getClass().toString());
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        logger.info("Execution doGet " + this.getClass().toString());
         HttpSession session = request.getSession();
         if(session.getAttribute("user_email") == null) {
             this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
@@ -51,8 +51,6 @@ public class ArticleServlet extends HttpServlet {
                 Blog article = new ArticleDao().getArticle(Integer.parseInt(request.getParameter("id")));
                 request.setAttribute("article", article);
                 this.getServletContext().getRequestDispatcher("/Article.jsp").forward(request, response);
-            } catch (SQLException e) {
-                e.printStackTrace();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }

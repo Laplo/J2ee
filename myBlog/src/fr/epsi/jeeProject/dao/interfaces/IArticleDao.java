@@ -7,11 +7,14 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface IArticleDao {
-    List<Blog> getArticles() throws SQLException, ClassNotFoundException;
+
+    void countArticles() throws ClassNotFoundException;
+
+    List<Blog> getArticles() throws ClassNotFoundException;
 
     Blog getArticle(int id) throws SQLException, ClassNotFoundException;
 
-    void createArticle(Blog blog) throws ClassNotFoundException, SQLException;
+    void createArticle(Blog blog) throws ClassNotFoundException;
 
     void deleteArticle(int id) throws ClassNotFoundException;
 

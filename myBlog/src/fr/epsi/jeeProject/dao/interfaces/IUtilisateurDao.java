@@ -8,14 +8,13 @@ import fr.epsi.jeeProject.beans.Utilisateur;
 
 public interface IUtilisateurDao {
 
-	List<Utilisateur> getUtilisateurs() throws SQLException, ClassNotFoundException;
-
+	void countUtilisateurs() throws ClassNotFoundException;
+	List<Utilisateur> getUtilisateurs() throws ClassNotFoundException;
 	List<Utilisateur> getNonAdminUtilisateurs() throws ClassNotFoundException;
-
-	Utilisateur getUtilisateur(String email) throws ClassNotFoundException, SQLException;
-	void createUtilisateur(Utilisateur utilisateur) throws SQLException, ClassNotFoundException;
-	void updateUtilisateur(Utilisateur utilisateur) throws SQLException;
-	void deleteUtilisateur(Utilisateur utilisateur) throws SQLException;
+	Utilisateur getUtilisateur(String email) throws ClassNotFoundException;
+	void createUtilisateur(Utilisateur utilisateur) throws ClassNotFoundException;
+	void updateUtilisateur(Utilisateur utilisateur);
+	void deleteUtilisateur(Utilisateur utilisateur);
 
 	Utilisateur createUtilisateur(ResultSet rs) throws SQLException;
 }

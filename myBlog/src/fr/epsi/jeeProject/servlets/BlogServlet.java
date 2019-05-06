@@ -5,6 +5,8 @@ import fr.epsi.jeeProject.beans.Statut;
 import fr.epsi.jeeProject.beans.Utilisateur;
 import fr.epsi.jeeProject.dao.HSQLImpl.ArticleDao;
 import fr.epsi.jeeProject.dao.HSQLImpl.UtilisateurDao;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,7 +21,11 @@ import java.util.List;
 
 @WebServlet("/Blog")
 public class BlogServlet extends HttpServlet {
+
+    private static final Logger logger = LogManager.getLogger(AuthenticationServlet.class);
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        logger.info("Execution doPost " + this.getClass().toString());
         Blog blog = new Blog();
         blog.setTitre(request.getParameter("titre"));
         blog.setDescription(request.getParameter("description"));
@@ -30,14 +36,14 @@ public class BlogServlet extends HttpServlet {
         List<Blog> articles = null;
         try {
             articles = new ArticleDao().getArticles();
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         try {
             blog.setCreateur(new UtilisateurDao().getUtilisateur((String) request.getSession().getAttribute("user_email")));
             new ArticleDao().createArticle(blog);
             articles.add(0, blog);
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         request.setAttribute("articles", articles);
@@ -45,10 +51,10 @@ public class BlogServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("do get Blog");
+        logger.info("Execution doGet " + this.getClass().toString());
         try {
             request.setAttribute("articles", new ArticleDao().getArticles());
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         this.getServletContext().getRequestDispatcher("/Blog.jsp").forward(request, response);

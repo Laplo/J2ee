@@ -1,3 +1,7 @@
+import fr.epsi.jeeProject.dao.HSQLImpl.ArticleDao;
+import fr.epsi.jeeProject.dao.HSQLImpl.UtilisateurDao;
+import fr.epsi.jeeProject.dao.interfaces.IArticleDao;
+import fr.epsi.jeeProject.dao.interfaces.IUtilisateurDao;
 import fr.epsi.jeeProject.jmx.Premier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,22 +26,14 @@ public class StartupListener implements ServletContextListener,
     public StartupListener() {
 
         MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
-        ObjectName name = null;
+        ObjectName name;
 
         try {
             name = new ObjectName("fr.epsi.jmx:type=PremierMBean");
             Premier mbean = new Premier();
 
             mbs.registerMBean(mbean, name);
-        } catch (MalformedObjectNameException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        } catch (InstanceAlreadyExistsException e) {
-            e.printStackTrace();
-        } catch (MBeanRegistrationException e) {
-            e.printStackTrace();
-        } catch (NotCompliantMBeanException e) {
+        } catch (MalformedObjectNameException | NullPointerException | InstanceAlreadyExistsException | NotCompliantMBeanException | MBeanRegistrationException e) {
             e.printStackTrace();
         }
     }
@@ -51,6 +47,14 @@ public class StartupListener implements ServletContextListener,
          You can initialize servlet context related data here.
       */
         logger.debug("Lancement de l'application");
+        IArticleDao articleDao = new ArticleDao();
+        IUtilisateurDao utilisateurDao = new UtilisateurDao();
+        try {
+            articleDao.countArticles();
+            utilisateurDao.countUtilisateurs();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public void contextDestroyed(ServletContextEvent sce) {

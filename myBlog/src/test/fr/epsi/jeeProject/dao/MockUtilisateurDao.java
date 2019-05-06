@@ -1,4 +1,4 @@
-package fr.epsi.jeeProject.dao.mockImpl;
+package test.fr.epsi.jeeProject.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,7 +14,12 @@ public class MockUtilisateurDao implements IUtilisateurDao {
 	private static List<Utilisateur> listOfUtilisateurs;
 
 	@Override
-	public List<Utilisateur> getUtilisateurs() throws SQLException, ClassNotFoundException {
+	public void countUtilisateurs() throws ClassNotFoundException {
+
+	}
+
+	@Override
+	public List<Utilisateur> getUtilisateurs() throws ClassNotFoundException {
 		return null;
 	}
 
@@ -33,12 +38,12 @@ public class MockUtilisateurDao implements IUtilisateurDao {
 	}
 
 	@Override
-	public void createUtilisateur(Utilisateur utilisateur) throws SQLException {
+	public void createUtilisateur(Utilisateur utilisateur) {
 		getListOfUtilisateur().add(utilisateur);
 	}
 
 	@Override
-	public void updateUtilisateur(Utilisateur utilisateur) throws SQLException {
+	public void updateUtilisateur(Utilisateur utilisateur) {
 		for (Utilisateur u : getListOfUtilisateur()) {
 			if (u.getEmail().equals(utilisateur.getEmail())) {
 				u.setAdmin(utilisateur.getAdmin());
@@ -48,7 +53,7 @@ public class MockUtilisateurDao implements IUtilisateurDao {
 	}
 
 	@Override
-	public void deleteUtilisateur(Utilisateur utilisateur) throws SQLException {
+	public void deleteUtilisateur(Utilisateur utilisateur) {
 		for (Utilisateur u : getListOfUtilisateur()) {
 			if (u.getEmail().equals(utilisateur.getEmail())) {
 				getListOfUtilisateur().remove(u);
@@ -64,7 +69,7 @@ public class MockUtilisateurDao implements IUtilisateurDao {
 
 	private List<Utilisateur> getListOfUtilisateur() {
 		if (listOfUtilisateurs == null) {
-			listOfUtilisateurs = new ArrayList<Utilisateur>();
+			listOfUtilisateurs = new ArrayList<>();
 			Utilisateur utilisateur = new Utilisateur();
 			utilisateur.setEmail("contact@aquasys.fr");
 			utilisateur.setNom("ADMIN");
