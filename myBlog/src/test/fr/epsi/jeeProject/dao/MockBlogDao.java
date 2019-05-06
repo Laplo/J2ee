@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import fr.epsi.jeeProject.beans.Blog;
-import fr.epsi.jeeProject.beans.Reponse;
-import fr.epsi.jeeProject.beans.Utilisateur;
-import fr.epsi.jeeProject.dao.interfaces.IBlogDao;
-import fr.epsi.jeeProject.dao.interfaces.IStatutDao;
-import fr.epsi.jeeProject.dao.interfaces.IUtilisateurDao;
+import java.fr.epsi.jeeProject.beans.Blog;
+import java.fr.epsi.jeeProject.beans.Reponse;
+import java.fr.epsi.jeeProject.beans.Utilisateur;
+import java.fr.epsi.jeeProject.dao.interfaces.IBlogDao;
+import java.fr.epsi.jeeProject.dao.interfaces.IStatutDao;
+import java.fr.epsi.jeeProject.dao.interfaces.IUtilisateurDao;
 
 public class MockBlogDao implements IBlogDao {
 
@@ -96,7 +96,7 @@ public class MockBlogDao implements IBlogDao {
 			blog.setTitre("First Blog");
 			blog.setDescription("My first blog");
 			blog.setDateCreation(new java.sql.Date(new Date().getTime()));
-			blog.setCreateur(utilisateurDao.getUtilisateur("contact@aquasys.fr"));
+			blog.setCreateur(utilisateurDao.getUtilisateur("contact@aquasys.java.fr"));
 			blog.setStatut(statutDao.getStatut(1));
 			listOfBlogs.add(blog);
 		}

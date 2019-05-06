@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import fr.epsi.jeeProject.beans.Utilisateur;
-import fr.epsi.jeeProject.dao.interfaces.IUtilisateurDao;
+import java.fr.epsi.jeeProject.beans.Utilisateur;
+import java.fr.epsi.jeeProject.dao.interfaces.IUtilisateurDao;
 
 public class MockUtilisateurDao implements IUtilisateurDao {
 
@@ -71,14 +71,14 @@ public class MockUtilisateurDao implements IUtilisateurDao {
 		if (listOfUtilisateurs == null) {
 			listOfUtilisateurs = new ArrayList<>();
 			Utilisateur utilisateur = new Utilisateur();
-			utilisateur.setEmail("contact@aquasys.fr");
+			utilisateur.setEmail("contact@aquasys.java.fr");
 			utilisateur.setNom("ADMIN");
 			utilisateur.setAdmin(true);
 			utilisateur.setDateCreation(new java.sql.Date(new Date().getTime()));
 			listOfUtilisateurs.add(utilisateur);
 			
 			utilisateur = new Utilisateur();
-			utilisateur.setEmail("test@aquasys.fr");
+			utilisateur.setEmail("test@aquasys.java.fr");
 			utilisateur.setNom("TEST");
 			utilisateur.setAdmin(false);
 			utilisateur.setDateCreation(new java.sql.Date(new Date().getTime()));

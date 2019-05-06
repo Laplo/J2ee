@@ -1,5 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="fr.epsi.jeeProject.beans.Blog" %>
+<%@ page import="java.fr.epsi.jeeProject.beans.Blog" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
