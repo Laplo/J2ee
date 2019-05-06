@@ -39,14 +39,19 @@
           </div>
           <div class="modal-body">
             <form action="Blog" method="post">
-              <div><label>Titre</label></div>
-              <input type="text" name="titre"/>
-              <br>
-              <div><label>Description</label></div>
-              <textarea rows = "5" cols = "50" name = "description"></textarea>
-              <br>
-              <br>
-              <button type="submit" class="button button-block">Get Started</button>
+              <div>
+                <label>Titre</label><br/>
+                <label><input type="text" name="titre"/></label>
+              </div>
+              <br/>
+              <div>
+                <label>Description</label><br/>
+                <label><textarea rows="5" cols="50" name="description"></textarea></label>
+              </div>
+              <br/>
+              <br/>
+              <button type="submit" class="btn btn-primary">Ajouter</button>
+              <button data-dismiss="modal" class="btn btn-secondary">Annuler</button>
             </form>
           </div>
         </div>

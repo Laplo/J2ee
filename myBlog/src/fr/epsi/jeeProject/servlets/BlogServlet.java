@@ -30,16 +30,12 @@ public class BlogServlet extends HttpServlet {
         Date date = new java.sql.Date(new java.util.Date().getTime());
         blog.setDateCreation(date);
         blog.setDateModification(date);
+        blog.setNbvues(0L);
         List<Blog> articles = null;
-        try {
-            articles = new ArticleDao().getArticles();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
         try {
             blog.setCreateur(new UtilisateurDao().getUtilisateur((String) request.getSession().getAttribute("user_email")));
             new ArticleDao().createArticle(blog);
-            articles.add(0, blog);
+            articles = new ArticleDao().getArticles();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

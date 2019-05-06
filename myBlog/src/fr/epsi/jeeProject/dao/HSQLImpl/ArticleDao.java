@@ -44,7 +44,7 @@ public class ArticleDao implements IArticleDao {
         Class.forName("org.hsqldb.jdbcDriver");
         try {
             con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003","SA","");
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM BLOG");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM BLOG ORDER BY ID DESC");
             ResultSet rs = ps.executeQuery();
             logger.debug("Requête DataBase : " + ps.toString());
             while (rs.next()) {

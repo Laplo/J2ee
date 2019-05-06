@@ -37,6 +37,7 @@ public class UtilisateurServlet extends HttpServlet {
         }
 
         if (request.getParameter("delete") != null) {
+            logger.info("Suppression de l'utilsateur : " + request.getParameter("delete"));
             new UtilisateurDao().deleteUtilisateur(new Utilisateur(request.getParameter("delete")));
             response.sendRedirect("/myEpsi/Admin");
         }

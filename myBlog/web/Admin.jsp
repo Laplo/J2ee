@@ -1,6 +1,9 @@
 <%@ page import="java.util.List" %>
 <%@ page import="fr.epsi.jeeProject.beans.Blog" %>
-<%@ page import="fr.epsi.jeeProject.beans.Utilisateur" %><%--
+<%@ page import="fr.epsi.jeeProject.beans.Utilisateur" %>
+<%@ page import="fr.epsi.jeeProject.dao.HSQLImpl.ArticleDao" %>
+<%@ page import="fr.epsi.jeeProject.dao.HSQLImpl.UtilisateurDao" %>
+<%@ page import="java.util.Objects" %><%--
   Created by IntelliJ IDEA.
   User: ronan
   Date: 28/04/2019
@@ -15,25 +18,31 @@
 <body>
     <a href="/myEpsi/Blog">Retour à la page d'accueil</a>
     <%
-        List<Blog> articles = (List<Blog>) request.getAttribute("articles");
-        List<Utilisateur> utilisateurs = (List<Utilisateur>) request.getAttribute("utilisateurs");
-        for (int i = 0; i < utilisateurs.size(); i++) {
+        List<Blog> articles = null;
+        List<Utilisateur> utilisateurs = null;
+        try {
+            articles = new ArticleDao().getArticles();
+            utilisateurs = new UtilisateurDao().getUtilisateurs();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        for (int i = 0; i < Objects.requireNonNull(utilisateurs).size(); i++) {
             if (i == 0) { %>
                 <h2>Utilisateurs</h2>
             <% } %>
-            <div>
+            <div class="users">
                 <%out.print(utilisateurs.get(i).getNom()); %>
                 <button>Modifier</button>
-                <a href="/myEpsi/Utilisateur?delete=<%=utilisateurs.get(i).getEmail()%>">Supprimer</a>
+                <a href="Utilisateur?delete=<%=utilisateurs.get(i).getEmail()%>">Supprimer</a>
             </div>
     <%  }
-        for (int i = 0; i < articles.size(); i++) {
+        for (int i = 0; i < Objects.requireNonNull(articles).size(); i++) {
             if (i == 0) { %>
                 <h2>Articles</h2>
             <% } %>
-            <div>
-                <%out.print(articles.get(i).getTitre()); %>
-                <a href="/myEpsi/Article?delete=<%=articles.get(i).getId()%>">Supprimer</a>
+            <div class="articles">
+                <% out.print(articles.get(i).getTitre()); %>
+                <a href="Article?delete=<%=articles.get(i).getId()%>">Supprimer</a>
             </div>
     <%  } %>
 </body>
