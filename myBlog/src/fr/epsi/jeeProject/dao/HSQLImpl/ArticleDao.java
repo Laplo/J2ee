@@ -1,7 +1,7 @@
-package java.fr.epsi.jeeProject.dao.HSQLImpl;
+package fr.epsi.jeeProject.dao.HSQLImpl;
 
-import java.fr.epsi.jeeProject.beans.Blog;
-import java.fr.epsi.jeeProject.dao.interfaces.IArticleDao;
+import fr.epsi.jeeProject.beans.Blog;
+import fr.epsi.jeeProject.dao.interfaces.IArticleDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

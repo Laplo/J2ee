@@ -1,6 +1,6 @@
 <%@ page import="java.util.List" %>
-<%@ page import="java.fr.epsi.jeeProject.beans.Blog" %>
-<%@ page import="java.fr.epsi.jeeProject.beans.Utilisateur" %><%--
+<%@ page import="fr.epsi.jeeProject.beans.Blog" %>
+<%@ page import="fr.epsi.jeeProject.beans.Utilisateur" %><%--
   Created by IntelliJ IDEA.
   User: ronan
   Date: 28/04/2019

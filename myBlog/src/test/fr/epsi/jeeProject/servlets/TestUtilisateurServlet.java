@@ -1,7 +1,7 @@
 package test.fr.epsi.jeeProject.servlets;
 
 
-import java.fr.epsi.jeeProject.servlets.UtilisateurServlet;
+import fr.epsi.jeeProject.servlets.UtilisateurServlet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Before;

@@ -3,8 +3,8 @@ package test.fr.epsi.jeeProject.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.fr.epsi.jeeProject.beans.Statut;
-import java.fr.epsi.jeeProject.dao.interfaces.IStatutDao;
+import fr.epsi.jeeProject.beans.Statut;
+import fr.epsi.jeeProject.dao.interfaces.IStatutDao;
 
 public class MockStatutDao implements IStatutDao {
 

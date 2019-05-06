@@ -1,9 +1,9 @@
-package java.fr.epsi.jeeProject.servlets;
+package fr.epsi.jeeProject.servlets;
 
-import java.fr.epsi.jeeProject.beans.Blog;
-import java.fr.epsi.jeeProject.beans.Utilisateur;
-import java.fr.epsi.jeeProject.dao.HSQLImpl.ArticleDao;
-import java.fr.epsi.jeeProject.dao.HSQLImpl.UtilisateurDao;
+import fr.epsi.jeeProject.beans.Blog;
+import fr.epsi.jeeProject.beans.Utilisateur;
+import fr.epsi.jeeProject.dao.HSQLImpl.ArticleDao;
+import fr.epsi.jeeProject.dao.HSQLImpl.UtilisateurDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

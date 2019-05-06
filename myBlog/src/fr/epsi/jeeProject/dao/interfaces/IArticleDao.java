@@ -1,6 +1,6 @@
-package java.fr.epsi.jeeProject.dao.interfaces;
+package fr.epsi.jeeProject.dao.interfaces;
 
-import java.fr.epsi.jeeProject.beans.Blog;
+import fr.epsi.jeeProject.beans.Blog;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

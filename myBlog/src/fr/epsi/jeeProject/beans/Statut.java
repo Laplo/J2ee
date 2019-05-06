@@ -1,4 +1,4 @@
-package java.fr.epsi.jeeProject.beans;
+package fr.epsi.jeeProject.beans;
 
 public class Statut {
 

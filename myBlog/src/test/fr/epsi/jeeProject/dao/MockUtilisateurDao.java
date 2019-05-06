@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import java.fr.epsi.jeeProject.beans.Utilisateur;
-import java.fr.epsi.jeeProject.dao.interfaces.IUtilisateurDao;
+import fr.epsi.jeeProject.beans.Utilisateur;
+import fr.epsi.jeeProject.dao.interfaces.IUtilisateurDao;
 
 public class MockUtilisateurDao implements IUtilisateurDao {
 

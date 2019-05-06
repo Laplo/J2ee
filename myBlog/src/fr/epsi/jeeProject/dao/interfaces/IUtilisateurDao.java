@@ -1,10 +1,10 @@
-package java.fr.epsi.jeeProject.dao.interfaces;
+package fr.epsi.jeeProject.dao.interfaces;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import java.fr.epsi.jeeProject.beans.Utilisateur;
+import fr.epsi.jeeProject.beans.Utilisateur;
 
 public interface IUtilisateurDao {
 

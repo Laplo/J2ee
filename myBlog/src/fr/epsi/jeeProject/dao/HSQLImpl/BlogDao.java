@@ -1,9 +1,9 @@
-package java.fr.epsi.jeeProject.dao.HSQLImpl;
+package fr.epsi.jeeProject.dao.HSQLImpl;
 
-import java.fr.epsi.jeeProject.beans.Blog;
-import java.fr.epsi.jeeProject.beans.Reponse;
-import java.fr.epsi.jeeProject.beans.Utilisateur;
-import java.fr.epsi.jeeProject.dao.interfaces.IBlogDao;
+import fr.epsi.jeeProject.beans.Blog;
+import fr.epsi.jeeProject.beans.Reponse;
+import fr.epsi.jeeProject.beans.Utilisateur;
+import fr.epsi.jeeProject.dao.interfaces.IBlogDao;
 
 import java.sql.SQLException;
 import java.util.List;

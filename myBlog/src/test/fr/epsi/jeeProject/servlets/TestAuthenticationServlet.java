@@ -1,6 +1,6 @@
 package test.fr.epsi.jeeProject.servlets;
 
-import java.fr.epsi.jeeProject.servlets.AuthenticationServlet;
+import fr.epsi.jeeProject.servlets.AuthenticationServlet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Before;

@@ -1,4 +1,4 @@
-package java.fr.epsi.jeeProject.jmx;
+package fr.epsi.jeeProject.jmx;
 
 public interface PremierMBean {
     String getNom();

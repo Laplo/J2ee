@@ -1,4 +1,4 @@
-package java.fr.epsi.jeeProject.domain;
+package fr.epsi.jeeProject.domain;
 
 import java.util.Date;
 
