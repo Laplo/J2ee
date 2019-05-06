@@ -75,14 +75,14 @@
             <label>
               Email Address<span class="req">*</span>
             </label>
-              <input type="email" required autocomplete="off"/>
+              <input type="email" name="login-email" required autocomplete="off"/>
           </div>
 
           <div class="field-wrap">
             <label>
               Password<span class="req">*</span>
             </label>
-              <input type="password" required autocomplete="off"/>
+              <input type="password" name="login-password" required autocomplete="off"/>
           </div>
 
           <p class="forgot"><a href="#">Forgot Password?</a></p>

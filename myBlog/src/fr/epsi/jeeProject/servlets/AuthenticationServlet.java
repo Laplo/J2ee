@@ -12,11 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 @WebServlet("/Authentication")
 public class AuthenticationServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private static final Logger logger = LogManager.getLogger(TestServlet.class);
+    private static final Logger logger = LogManager.getLogger(AuthenticationServlet.class);
 
     public AuthenticationServlet() {
         super();
@@ -31,14 +32,30 @@ public class AuthenticationServlet extends HttpServlet {
         user.setEmail(request.getParameter("email"));
         user.setPassword(request.getParameter("password"));
         try {
-            new UtilisateurDao().getUtilisateur("remi.castel@epsi.fr");
+            if (user.getPassword().compareTo(request.getParameter("confirm-password")) != 0) {
+                logger.error("les mots de passes ne correspondent pas");
+                this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+                return;
+            }
+
+            List<Utilisateur> utilisateurs = new UtilisateurDao().getUtilisateurs();
+            for (int i = 0; i < utilisateurs.size(); i++) {
+                if (utilisateurs.get(i).getEmail().compareTo(user.getEmail()) == 0) {
+                    logger.error("Un utilisateur possède déjà cet email");
+                    this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+                    return;
+                }
+            }
+
+            new UtilisateurDao().createUtilisateur(user);
         } catch (SQLException e) {
+            logger.error(e);
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
+            logger.error(e);
             e.printStackTrace();
         }
 
         this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
-        request.getParameterMap().keySet().forEach(System.out::println);
     }
 }

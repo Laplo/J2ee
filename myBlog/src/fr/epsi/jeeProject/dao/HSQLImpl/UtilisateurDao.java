@@ -6,10 +6,66 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UtilisateurDao implements IUtilisateurDao {
 
     private static final Logger logger = LogManager.getLogger(UtilisateurDao.class);
+
+    @Override
+    public List<Utilisateur> getUtilisateurs() throws SQLException, ClassNotFoundException {
+        List<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
+        Connection con = null;
+        Class.forName("org.hsqldb.jdbcDriver");
+        try {
+            con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003", "SA", "");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM USERS");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Utilisateur utilisateur = createUtilisateur(rs);
+                utilisateurs.add(utilisateur);
+            }
+        } catch (SQLException e) {
+            logger.error("Error while getting users ", e);
+        } finally {
+            try {
+                if (con != null && !con.isClosed()) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                logger.warn("Error while closing connection");
+            }
+        }
+        return utilisateurs;
+    }
+
+    @Override
+    public List<Utilisateur> getNonAdminUtilisateurs() throws ClassNotFoundException {
+        List<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
+        Connection con = null;
+        Class.forName("org.hsqldb.jdbcDriver");
+        try {
+            con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003", "SA", "");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM USERS WHERE IS_ADMIN = false");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Utilisateur utilisateur = createUtilisateur(rs);
+                utilisateurs.add(utilisateur);
+            }
+        } catch (SQLException e) {
+            logger.error("Error while getting users ", e);
+        } finally {
+            try {
+                if (con != null && !con.isClosed()) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                logger.warn("Error while closing connection");
+            }
+        }
+        return utilisateurs;
+    }
 
     @Override
     public Utilisateur getUtilisateur(String email) throws SQLException, ClassNotFoundException {
@@ -23,11 +79,7 @@ public class UtilisateurDao implements IUtilisateurDao {
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                myUser = new Utilisateur();
-                myUser.setEmail(rs.getString(1));
-                myUser.setNom(rs.getString(2));
-                myUser.setPassword(rs.getString(4));
-                System.out.println(myUser.getNom());
+                myUser = createUtilisateur(rs);
             }
             rs.close();
             con.close();
@@ -111,13 +163,13 @@ public class UtilisateurDao implements IUtilisateurDao {
     public void deleteUtilisateur(Utilisateur utilisateur) throws SQLException {
         Connection con = null;
         try {
-            con = DriverManager.getConnection("jdbc:hsqldb:file:C:/Users/Remi-/Desktop/db/HSQLDB6911D24090", "SA", "d41d8cd98f00b204e9800998ecf8427e");
+            con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003", "SA", "");
             PreparedStatement ps = con.prepareStatement("DELETE FROM USERS WHERE EMAIL = ?");
             ps.setString(1,utilisateur.getEmail());
             if (ps.executeUpdate() == 1) {
-                logger.info("Utilisateur " + utilisateur.getEmail() + " correctement mis à jour dans la base.");
+                logger.info("Utilisateur " + utilisateur.getEmail() + " correctement supprimé.");
             } else {
-                logger.error("Erreur pendant la mise à jour de l'utilisateur " + utilisateur.getEmail() + ".");
+                logger.error("Erreur pendant la suppression de l'utilisateur " + utilisateur.getEmail() + ".");
             }
         } catch (SQLException e) {
             logger.error("Error while getting user " + utilisateur.getEmail(), e);
@@ -130,5 +182,16 @@ public class UtilisateurDao implements IUtilisateurDao {
                 logger.warn("Error while closing connection");
             }
         }
+    }
+
+    @Override
+    public Utilisateur createUtilisateur(ResultSet rs) throws SQLException {
+        Utilisateur myUser = new Utilisateur();
+        myUser.setEmail(rs.getString(1));
+        myUser.setNom(rs.getString(2));
+        myUser.setPassword(rs.getString(4));
+        myUser.setAdmin(rs.getBoolean(5));
+        System.out.println(myUser.getNom());
+        return myUser;
     }
 }

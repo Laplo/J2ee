@@ -2,6 +2,13 @@ package fr.epsi.jeeProject.beans;
 
 public class Statut {
 
+	public Statut() {
+	}
+
+	public Statut(Integer id) {
+		this.id = id;
+	}
+
 	private Integer id;
 	private String description;
 	

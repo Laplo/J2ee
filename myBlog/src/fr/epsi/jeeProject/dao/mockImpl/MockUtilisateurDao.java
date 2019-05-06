@@ -1,5 +1,6 @@
 package fr.epsi.jeeProject.dao.mockImpl;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,7 +12,17 @@ import fr.epsi.jeeProject.dao.interfaces.IUtilisateurDao;
 public class MockUtilisateurDao implements IUtilisateurDao {
 
 	private static List<Utilisateur> listOfUtilisateurs;
-	
+
+	@Override
+	public List<Utilisateur> getUtilisateurs() throws SQLException, ClassNotFoundException {
+		return null;
+	}
+
+	@Override
+	public List<Utilisateur> getNonAdminUtilisateurs() throws ClassNotFoundException {
+		return null;
+	}
+
 	@Override
 	public Utilisateur getUtilisateur(String email) {
 		for (Utilisateur u : getListOfUtilisateur()) {
@@ -44,6 +55,11 @@ public class MockUtilisateurDao implements IUtilisateurDao {
 				return;
 			}
 		}
+	}
+
+	@Override
+	public Utilisateur createUtilisateur(ResultSet rs) throws SQLException {
+		return null;
 	}
 
 	private List<Utilisateur> getListOfUtilisateur() {
