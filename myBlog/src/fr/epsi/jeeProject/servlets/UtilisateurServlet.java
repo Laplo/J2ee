@@ -20,6 +20,21 @@ public class UtilisateurServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         logger.info("Execution doPost " + this.getClass().toString());
+        if (request.getParameter("name") != null
+                && request.getParameter("email") != null
+                && request.getParameter("password") != null) {
+            try {
+                Utilisateur u = new Utilisateur(request.getParameter("delete"));
+                u.setAdmin(false);
+                u.setEmail(request.getParameter("email"));
+                u.setNom(request.getParameter("name"));
+                u.setPassword(request.getParameter("password"));
+                new UtilisateurDao().createUtilisateur(u);
+                response.sendRedirect("/myEpsi/Admin");
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
