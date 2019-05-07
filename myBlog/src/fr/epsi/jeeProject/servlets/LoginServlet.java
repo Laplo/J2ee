@@ -28,7 +28,6 @@ public class LoginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         logger.info("Execution doPost " + this.getClass().toString());
-        request.getParameterMap().keySet().forEach(System.out::println);
         List<Utilisateur> utilisateurs = null;
 
         try {
@@ -58,7 +57,6 @@ public class LoginServlet extends HttpServlet {
 
             try {
                 articleList = new ArticleDao().getArticles();
-                articleList.forEach(article -> System.out.println("authentication get article " + article.getTitre()));
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }

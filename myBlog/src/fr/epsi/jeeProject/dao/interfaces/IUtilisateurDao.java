@@ -13,7 +13,7 @@ public interface IUtilisateurDao {
 	List<Utilisateur> getNonAdminUtilisateurs() throws ClassNotFoundException;
 	Utilisateur getUtilisateur(String email) throws ClassNotFoundException;
 	void createUtilisateur(Utilisateur utilisateur) throws ClassNotFoundException;
-	void updateUtilisateur(Utilisateur utilisateur);
+	void updateUtilisateur(Utilisateur utilisateur, String oldEmail) throws ClassNotFoundException;
 	void deleteUtilisateur(Utilisateur utilisateur);
 
 	Utilisateur createUtilisateur(ResultSet rs) throws SQLException;

@@ -12,21 +12,22 @@ public class MockStatutDao implements IStatutDao {
 	
 	@Override
 	public Statut getStatut(Integer id) {
-		for (Statut s: getListOfStatuts()) {
+		for (Statut s: getAllStatut()) {
 			if (s.getId().intValue() == id.intValue()) {
 				return s;
 			}
 		}
 		return null;
 	}
+
 	@Override
-	public List<Statut> getListOfStatuts() {
+	public List<Statut> getAllStatut() {
 		return getPrivateListOfStatuts();
 	}
 
 	private List<Statut> getPrivateListOfStatuts() {
 		if (listOfStatuts == null) {
-			listOfStatuts = new ArrayList<Statut>();
+			listOfStatuts = new ArrayList<>();
 			Statut statut = new Statut();
 			statut.setId(1);
 			statut.setDescription("Temporaire");

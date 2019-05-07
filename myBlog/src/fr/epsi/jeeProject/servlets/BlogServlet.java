@@ -30,7 +30,7 @@ public class BlogServlet extends HttpServlet {
         Date date = new java.sql.Date(new java.util.Date().getTime());
         blog.setDateCreation(date);
         blog.setDateModification(date);
-        blog.setNbvues(0L);
+        blog.setNbvues(0);
         List<Blog> articles = null;
         try {
             blog.setCreateur(new UtilisateurDao().getUtilisateur((String) request.getSession().getAttribute("user_email")));

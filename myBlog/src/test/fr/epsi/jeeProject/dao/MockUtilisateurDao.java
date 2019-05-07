@@ -43,7 +43,7 @@ public class MockUtilisateurDao implements IUtilisateurDao {
 	}
 
 	@Override
-	public void updateUtilisateur(Utilisateur utilisateur) {
+	public void updateUtilisateur(Utilisateur utilisateur, String oldEmail) {
 		for (Utilisateur u : getListOfUtilisateur()) {
 			if (u.getEmail().equals(utilisateur.getEmail())) {
 				u.setAdmin(utilisateur.getAdmin());

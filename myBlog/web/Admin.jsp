@@ -1,8 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="fr.epsi.jeeProject.beans.Blog" %>
 <%@ page import="fr.epsi.jeeProject.beans.Utilisateur" %>
-<%@ page import="fr.epsi.jeeProject.dao.HSQLImpl.ArticleDao" %>
-<%@ page import="fr.epsi.jeeProject.dao.HSQLImpl.UtilisateurDao" %>
 <%@ page import="java.util.Objects" %><%--
   Created by IntelliJ IDEA.
   User: ronan
@@ -10,7 +8,7 @@
   Time: 16:16
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,300,700' rel='stylesheet' type='text/css'>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -32,63 +30,73 @@
                 <div class="modal-body">
                     <form action="Utilisateur" method="post">
                         <div><label>Nom</label></div>
-                        <input type="text" name="name" id="nameId"/>
-                        <br>
+                        <label for="nameId"></label><input type="text" name="name" id="nameId"/>
+                        <br/>
                         <div><label>Email</label></div>
-                        <input type="email" name="email" id="emailId" required autocomplete="off"/>
-                        <br>
+                        <label for="emailId"></label><input type="email" name="email" id="emailId" required autocomplete="off"/>
+                        <br/>
                         <div><label>Mot de passe</label></div>
-                        <input type="password" name="password" id="passwordId" required autocomplete="off"/>
-                        <br>
-                        <br>
-                        <button type="submit" class="button button-block">Créer</button>
+                        <label for="passwordId"></label><input type="password" name="password" id="passwordId" required autocomplete="off"/>
+                        <br/>
+                        <input type="hidden" name="isCreating" id="isCreating" value="true">
+                        <input type="hidden" name="oldEmail" id="oldEmail">
+                        <br/>
+                        <button id="submitModal" type="submit" class="button button-block">Créer</button>
                     </form>
                 </div>
             </div>
         </div>
-    </div><div>
+    </div>
+    <div>
         <a href="/myEpsi/Blog">Retour à la page d'accueil</a>
     </div>
     <div>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createUserModal">
+        <button onclick="createUser()" type="button" class="btn btn-primary" data-toggle="modal" data-target="#createUserModal">
             Créer un utilisateur
         </button>
     </div>
     <%
-        List<Blog> articles = null;
-        List<Utilisateur> utilisateurs = null;
-        try {
-            articles = new ArticleDao().getArticles();
-            utilisateurs = new UtilisateurDao().getUtilisateurs();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        List<Blog> articles = (List<Blog>) request.getAttribute("articles");
+        List<Utilisateur> utilisateurs = (List<Utilisateur>) request.getAttribute("utilisateurs");
+        if (!utilisateurs.isEmpty()) {
+            %><h2>Utilisateurs</h2><%
         }
-        for (int i = 0; i < Objects.requireNonNull(utilisateurs).size(); i++) {
-            if (i == 0) { %>
-                <h2>Utilisateurs</h2>
-            <% } %>
-            <div class="users">
-                <%out.print(utilisateurs.get(i).getNom()); %>
-                <button type="button" class="btn btn-primary" data-id="<%utilisateurs.get(i);%>" data-toggle="modal" data-target="#createUserModal" id="modify-user">
+        for (Utilisateur utilisateur : utilisateurs) {
+            %> <div class="users">
+                <%out.print(utilisateur.getNom()); %>
+                <button type="button" class="btn btn-primary" onclick="onClickModify('<% out.print(utilisateur.getEmail());%>','<% out.print(utilisateur.getNom());%>')">
                     Modifier
                 </button>
-                <a href="Utilisateur?delete=<%=utilisateurs.get(i).getEmail()%>">Supprimer</a>
+            <a href="Utilisateur?delete=<%=utilisateur.getEmail()%>">Supprimer</a>
             </div>
-    <%  }
-        for (int i = 0; i < Objects.requireNonNull(articles).size(); i++) {
-            if (i == 0) { %>
-                <h2>Articles</h2>
-            <% } %>
-            <div class="articles">
-                <% out.print(articles.get(i).getTitre()); %>
-                <a href="Article?delete=<%=articles.get(i).getId()%>">Supprimer</a>
+         <%  }
+        if (!articles.isEmpty()) {
+            %><h2>Articles</h2><%
+        }
+        for (Blog blog : articles) {
+         %> <div class="articles">
+                <% out.print(blog.getTitre()); %>
+                <a href="Article?delete=<%=blog.getId()%>">Supprimer</a>
             </div>
     <%  } %>
 </body>
 </html>
 <script>
-    $("#modify-user").click(function () {
-        var name = $(this).data('id');
-        console.log(name);
-    });
+    function onClickModify(email, name) {
+        document.getElementById('emailId').value = email;
+        document.getElementById('nameId').value = name;
+        document.getElementById('isCreating').value = false;
+        document.getElementById('oldEmail').value = email;
+        document.getElementById('submitModal').innerText = 'Modifier';
+        document.getElementById('exampleModalLabel').innerText = 'Modification de l\'utilisateur '+email;
+        $('#createUserModal').modal('show');
+    }
+    function createUser() {
+        document.getElementById('emailId').value = '';
+        document.getElementById('nameId').value = '';
+        document.getElementById('isCreating').value = true;
+        document.getElementById('oldEmail').value = null;
+        document.getElementById('submitModal').innerText = 'Créer';
+        document.getElementById('exampleModalLabel').innerText = 'Créer un utilisateur';
+    }
 </script>

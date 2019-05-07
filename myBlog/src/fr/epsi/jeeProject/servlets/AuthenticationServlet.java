@@ -24,35 +24,34 @@ public class AuthenticationServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         logger.info("Execution doPost " + this.getClass().toString());
-        request.getParameterMap().keySet().forEach(System.out::println);
         Utilisateur user = new Utilisateur();
         user.setAdmin(false);
         user.setNom(request.getParameter("lastname") + ' ' + request.getParameter("firstname"));
         user.setEmail(request.getParameter("email"));
         user.setPassword(request.getParameter("password"));
         try {
+            boolean error = false;
             if (user.getPassword().compareTo(request.getParameter("confirm-password")) != 0) {
                 logger.error("les mots de passes ne correspondent pas");
-                this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
-                return;
+                request.setAttribute("errorMessageSignUpPW", "Passwords must match");
+                error = true;
             }
 
             List<Utilisateur> utilisateurs = new UtilisateurDao().getUtilisateurs();
             for (Utilisateur utilisateur : utilisateurs) {
                 if (utilisateur.getEmail().compareTo(user.getEmail()) == 0) {
                     logger.error("Un utilisateur possède déjà cet email");
-                    response.sendError(0,"Un utilisateur possède déjà cet email");
-                    this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
-                    return;
+                    request.setAttribute("errorMessageSignUpEM", "Already used email address");
+                    error = true;
                 }
             }
-
-            new UtilisateurDao().createUtilisateur(user);
+            if (!error) {
+                new UtilisateurDao().createUtilisateur(user);
+            }
         } catch (ClassNotFoundException e) {
             logger.error(e);
             e.printStackTrace();
         }
-
         this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
     }
 }

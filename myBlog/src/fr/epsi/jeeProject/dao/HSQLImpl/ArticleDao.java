@@ -21,7 +21,7 @@ public class ArticleDao implements IArticleDao {
             con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003","SA","");
             PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM BLOG");
             ResultSet rs = ps.executeQuery();
-            logger.debug("Requête DataBase : " + ps.toString());
+            logger.debug("Requête DataBase : " + ps);
             rs.next();
             logger.error("Nombre de posts présent en base : " + rs.getInt(1));
         } catch (SQLException e) {
@@ -39,21 +39,20 @@ public class ArticleDao implements IArticleDao {
 
     @Override
     public List<Blog> getArticles() throws ClassNotFoundException {
-        List<Blog> articles = new ArrayList<Blog>();
+        List<Blog> articles = new ArrayList<>();
         Connection con = null;
         Class.forName("org.hsqldb.jdbcDriver");
         try {
             con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003","SA","");
             PreparedStatement ps = con.prepareStatement("SELECT * FROM BLOG ORDER BY ID DESC");
             ResultSet rs = ps.executeQuery();
-            logger.debug("Requête DataBase : " + ps.toString());
+            logger.debug("Requête DataBase : " + ps);
             while (rs.next()) {
                 Blog article = createArticle(rs);
                 articles.add(article);
             }
             rs.close();
             con.close();
-            articles.forEach(article -> System.out.println("articles dao get article : " + article.getTitre()));
         } catch (SQLException e) {
             logger.error("Error while getting articles ", e);
         } finally {
@@ -80,7 +79,7 @@ public class ArticleDao implements IArticleDao {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM BLOG  WHERE ID = ?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            logger.debug("Requête DataBase : " + ps.toString());
+            logger.debug("Requête DataBase : " + ps);
             if (rs.next()) {
                 article = createArticle(rs);
             }
@@ -103,22 +102,23 @@ public class ArticleDao implements IArticleDao {
 
     @Override
     public void createArticle(Blog blog) throws ClassNotFoundException {
-        List<Blog> articles = new ArrayList<Blog>();
+        List<Blog> articles = new ArrayList<>();
 
         Connection con = null;
 
         Class.forName("org.hsqldb.jdbcDriver");
         try {
             con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003", "SA", "");
-            PreparedStatement ps = con.prepareStatement("INSERT INTO BLOG (TITRE, DESCRIPTION, EMAIL, DATE_CREATION, DATE_MODIFICATION, STATUT)" +
-                                                            " VALUES (?, ?, ?, ?, ?, ?)");
+            PreparedStatement ps = con.prepareStatement("INSERT INTO BLOG (TITRE, DESCRIPTION, EMAIL, DATE_CREATION, DATE_MODIFICATION, STATUT, NBVUES)" +
+                                                            " VALUES (?, ?, ?, ?, ?, ?, ?)");
             ps.setString(1, blog.getTitre());
             ps.setString(2, blog.getDescription());
             ps.setString(3, blog.getCreateur().getEmail());
             ps.setDate(4, blog.getDateCreation());
             ps.setDate(5, blog.getDateModification());
             ps.setInt(6, blog.getStatut().getId());
-            logger.debug("Requête DataBase : " + ps.toString());
+            ps.setInt(7, blog.getNbvues());
+            logger.debug("Requête DataBase : " + ps);
             if (ps.executeUpdate() == 1) {
                 logger.info("Blog " + blog.getTitre() + " correctement inseré dans la base.");
             } else {
@@ -147,7 +147,7 @@ public class ArticleDao implements IArticleDao {
             con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003", "SA", "");
             PreparedStatement ps = con.prepareStatement("DELETE FROM BLOG WHERE ID = ?");
             ps.setInt(1, id);
-            logger.debug("Requête DataBase : " + ps.toString());
+            logger.debug("Requête DataBase : " + ps);
             if (ps.executeUpdate() == 1) {
                 logger.info("Blog " + id + " correctement supprimé");
             } else {
@@ -155,6 +155,38 @@ public class ArticleDao implements IArticleDao {
             }
         } catch (SQLException e) {
             logger.error("Error while getting articles ", e);
+        } finally {
+            try {
+                if (con != null && !con.isClosed()) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                logger.warn("Error while closing connection");
+            }
+        }
+    }
+
+    @Override
+    public void updateArticle(Blog blog) throws ClassNotFoundException {
+        Connection con = null;
+        Class.forName("org.hsqldb.jdbcDriver");
+        try {
+            con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003", "SA", "");
+            PreparedStatement ps = con.prepareStatement("UPDATE BLOG SET TITRE = ?, DESCRIPTION = ?, DATE_MODIFICATION = ?, STATUT = ?, NBVUES = ? WHERE ID = ?");
+            ps.setString(1,blog.getTitre());
+            ps.setString(2,blog.getDescription());
+            ps.setDate(3,blog.getDateModification());
+            ps.setInt(4,blog.getStatut().getId());
+            ps.setInt(5,blog.getNbvues());
+            ps.setInt(6,blog.getId());
+            logger.debug("Requête DataBase : " + ps);
+            if (ps.executeUpdate() == 1) {
+                logger.info("Blog " + blog.getId() + " correctement mis à jour dans la base.");
+            } else {
+                logger.error("Erreur pendant la mise à jour du blog " + blog.getId() + ".");
+            }
+        } catch (SQLException e) {
+            logger.error("Error while updating blog " + blog.getId(), e);
         } finally {
             try {
                 if (con != null && !con.isClosed()) {
@@ -175,6 +207,8 @@ public class ArticleDao implements IArticleDao {
         article.setCreateur(new UtilisateurDao().getUtilisateur(rs.getString("email")));
         article.setDateCreation(rs.getDate("date_creation"));
         article.setDateModification(rs.getDate("date_modification"));
+        article.setStatut(new StatutDao().getStatut(rs.getInt("statut")));
+        article.setNbvues(rs.getInt("nbvues"));
         return article;
     }
 }

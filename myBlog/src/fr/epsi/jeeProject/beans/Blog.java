@@ -12,7 +12,7 @@ public class Blog {
     private Date dateCreation;
     private Date dateModification;
     private Statut statut;
-    private Long nbvues;
+    private Integer nbvues;
     private List<Reponse> listOfReponses;
 
     public List<Reponse> getListOfReponses() {
@@ -57,8 +57,8 @@ public class Blog {
     public void setDateModification(Date dateModification) {
         this.dateModification = dateModification;
     }
-    public Long getNbvues() { return nbvues; }
-    public void setNbvues(Long nbvues) { this.nbvues = nbvues; }
+    public Integer getNbvues() { return nbvues; }
+    public void setNbvues(Integer nbvues) { this.nbvues = nbvues; }
     public Statut getStatut() {
         return statut;
     }

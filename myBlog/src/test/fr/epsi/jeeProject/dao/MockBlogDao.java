@@ -1,5 +1,6 @@
 package test.fr.epsi.jeeProject.dao;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,17 +9,16 @@ import java.util.List;
 import fr.epsi.jeeProject.beans.Blog;
 import fr.epsi.jeeProject.beans.Reponse;
 import fr.epsi.jeeProject.beans.Utilisateur;
-import fr.epsi.jeeProject.dao.interfaces.IBlogDao;
+import fr.epsi.jeeProject.dao.interfaces.IReponseDao;
 import fr.epsi.jeeProject.dao.interfaces.IStatutDao;
 import fr.epsi.jeeProject.dao.interfaces.IUtilisateurDao;
 
-public class MockBlogDao implements IBlogDao {
+public class MockBlogDao implements IReponseDao {
 
 	private static List<Blog> listOfBlogs;
 	private IUtilisateurDao utilisateurDao = new MockUtilisateurDao();
 	private IStatutDao statutDao = new MockStatutDao();
-	
-	@Override
+
 	public Blog getBlog(Integer id) throws SQLException, ClassNotFoundException {
 		for (Blog b : getBlogs()) {
 			if (b.getId().intValue() == id.intValue()) {
@@ -28,9 +28,8 @@ public class MockBlogDao implements IBlogDao {
 		return null;
 	}
 
-	@Override
 	public List<Blog> getBlogs(Utilisateur utilisateur) throws SQLException, ClassNotFoundException {
-		List<Blog> myBlogs = new ArrayList<Blog>();
+		List<Blog> myBlogs = new ArrayList<>();
 		for (Blog b : getBlogs()) {
 			if (b.getCreateur().getEmail().equals(utilisateur.getEmail())) {
 				myBlogs.add(b);
@@ -41,11 +40,10 @@ public class MockBlogDao implements IBlogDao {
 		return myBlogs;
 	}
 
-	@Override
 	public Integer createBlog(Blog blog) throws SQLException, ClassNotFoundException {
 		int max = 0;
 		for (Blog b : getBlogs()) {
-			if (b.getId().intValue() > max) {
+			if (b.getId() > max) {
 				max = b.getId();
 			}
 		}
@@ -54,7 +52,6 @@ public class MockBlogDao implements IBlogDao {
 		return max;
 	}
 
-	@Override
 	public void updateBlog(Blog blog) throws SQLException, ClassNotFoundException {
 		for (Blog b : getBlogs()) {
 			if (b.getId().intValue() == blog.getId().intValue()) {
@@ -65,7 +62,6 @@ public class MockBlogDao implements IBlogDao {
 		}
 	}
 
-	@Override
 	public void deleteBlog(Blog blog) throws SQLException, ClassNotFoundException {
 		for (Blog b : getBlogs()) {
 			if (b.getId().intValue() == blog.getId().intValue()) {
@@ -75,12 +71,11 @@ public class MockBlogDao implements IBlogDao {
 		}
 	}
 
-	@Override
 	public void addReponse(Blog blog, Reponse reponse) throws SQLException, ClassNotFoundException {
 		for (Blog b : getBlogs()) {
 			if (b.getId().intValue() == blog.getId().intValue()) {
 				if (b.getListOfReponses() == null) {
-					b.setListOfReponses(new ArrayList<Reponse>());
+					b.setListOfReponses(new ArrayList<>());
 				}
 				b.getListOfReponses().add(reponse);
 				return;
@@ -88,9 +83,9 @@ public class MockBlogDao implements IBlogDao {
 		}
 	}
 	
-	private List<Blog> getBlogs() throws SQLException, ClassNotFoundException {
+	private List<Blog> getBlogs() throws ClassNotFoundException {
 		if (listOfBlogs == null) {
-			listOfBlogs = new ArrayList<Blog>();
+			listOfBlogs = new ArrayList<>();
 			Blog blog = new Blog();
 			blog.setId(1);
 			blog.setTitre("First Blog");
@@ -103,4 +98,32 @@ public class MockBlogDao implements IBlogDao {
 		return listOfBlogs;
 	}
 
+	@Override
+	public Integer countReponseByBlog(Blog blog){
+		return null;
+	}
+
+	@Override
+	public List<Reponse> getAllReponseByBlog(Blog blog) {
+		return null;
+	}
+
+	@Override
+	public Reponse getReponse(Integer id) {
+		return null;
+	}
+
+	@Override
+	public List<Reponse> getReponses(Utilisateur utilisateur) {
+		return null;
+	}
+
+	@Override
+	public void createReponse(Reponse reponse) {
+	}
+
+	@Override
+	public Reponse createReponse(ResultSet resultSet) {
+		return null;
+	}
 }

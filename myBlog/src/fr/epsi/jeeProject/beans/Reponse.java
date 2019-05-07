@@ -34,5 +34,4 @@ public class Reponse {
         this.publication = publication;
     }
 
-
 }

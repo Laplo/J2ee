@@ -21,7 +21,7 @@ public class AdminServlet extends HttpServlet {
 
     private static final Logger logger = LogManager.getLogger(AdminServlet.class);
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         logger.info("Execution doPost " + this.getClass().toString());
     }
 
@@ -39,9 +39,6 @@ public class AdminServlet extends HttpServlet {
         try {
             List<Utilisateur> utilisateurs = new UtilisateurDao().getNonAdminUtilisateurs();
             List<Blog> articles = new ArticleDao().getArticles();
-
-            articles.forEach(article -> System.out.println(article.getId()));
-
             request.setAttribute("articles", articles);
             request.setAttribute("utilisateurs", utilisateurs);
         } catch (ClassNotFoundException e) {

@@ -51,8 +51,17 @@
 
       <div id="signup">
         <h1>Sign Up</h1>
-
-
+        <span style="color:red;font-size: 24px;">
+          <% String errorMessageSignUpPW = "";
+          String errorMessageSignUpEM = "";
+            if (request.getAttribute("errorMessageSignUpPW") != null) errorMessageSignUpPW = request.getAttribute("errorMessageSignUpPW").toString();
+            if (request.getAttribute("errorMessageSignUpEM") != null) errorMessageSignUpEM = request.getAttribute("errorMessageSignUpEM").toString();
+            out.print(errorMessageSignUpPW+" ");
+            %>
+        </span>
+        <span style="color:lightcoral;font-size: 24px;">
+          <% out.print(errorMessageSignUpEM);%>
+        </span>
         <form action="Authentication" method="post">
 
           <div class="top-row">

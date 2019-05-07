@@ -22,7 +22,7 @@
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="float: right;">
             Créer
           </button>
-          <% if (isAdmin == true) {%>
+          <% if (isAdmin) {%>
           <a href="Admin">admin</a>
           <% } %>
         </h1>
@@ -83,9 +83,6 @@
             %>
           </p>
           <p class="text"><% out.print(blog.getDescription()); %></p>
-          <% if (email.compareTo(blog.getCreateur().getEmail()) != 0) { %>
-            <button class="btn btn-primary">Commenter</button>
-          <% } %>
         </div>
       </div>
     <% } %>
