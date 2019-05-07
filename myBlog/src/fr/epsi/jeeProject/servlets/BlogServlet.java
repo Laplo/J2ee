@@ -49,7 +49,7 @@ public class BlogServlet extends HttpServlet {
         HttpSession session = request.getSession();
         if (session.getAttribute("user_email") != null) {
             try {
-                request.setAttribute("articles", new ArticleDao().getArticles());
+                request.setAttribute("articles", new ArticleDao().getArticlesForFeed(session.getAttribute("user_email").toString()));
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }

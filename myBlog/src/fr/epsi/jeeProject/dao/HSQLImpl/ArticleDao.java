@@ -67,6 +67,37 @@ public class ArticleDao implements IArticleDao {
         return articles;
     }
 
+    public List<Blog> getArticlesForFeed(String email) throws ClassNotFoundException {
+        List<Blog> articles = new ArrayList<>();
+        Connection con = null;
+        Class.forName("org.hsqldb.jdbcDriver");
+        try {
+            con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003","SA","");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM BLOG WHERE STATUT in (1,2) " +
+                    "UNION SELECT * FROM BLOG WHERE EMAIL = ? ORDER BY ID DESC");
+            ps.setString(1,email);
+            ResultSet rs = ps.executeQuery();
+            logger.debug("Requête DataBase : " + ps);
+            while (rs.next()) {
+                Blog article = createArticle(rs);
+                articles.add(article);
+            }
+            rs.close();
+            con.close();
+        } catch (SQLException e) {
+            logger.error("Error while getting articles ", e);
+        } finally {
+            try {
+                if (con != null && !con.isClosed()) {
+                    con.close();
+                }
+            } catch (Exception e) {
+                logger.warn("Error while closing connection");
+            }
+        }
+        return articles;
+    }
+
     @Override
     public Blog getArticle(int id) throws ClassNotFoundException {
         Blog article = null;
