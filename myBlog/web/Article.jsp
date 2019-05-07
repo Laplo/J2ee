@@ -22,7 +22,7 @@
     <div class="content">
         <div class="card first">
             <h2 class="astyle"><% out.print(blog.getTitre()); %>
-                <% if (email.compareTo(blog.getCreateur().getEmail()) == 0) { %>
+                <% if (email.compareTo(blog.getCreateur().getEmail()) != 0) { %>
                     <i class="glyphicon glyphicon-user" style="float: right"></i>
                 <% } %>
             </h2>

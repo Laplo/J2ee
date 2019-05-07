@@ -73,7 +73,7 @@ public class ArticleDao implements IArticleDao {
         Class.forName("org.hsqldb.jdbcDriver");
         try {
             con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003","SA","");
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM BLOG WHERE STATUT in (1,2) " +
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM BLOG WHERE STATUT = 2 " +
                     "UNION SELECT * FROM BLOG WHERE EMAIL = ? ORDER BY ID DESC");
             ps.setString(1,email);
             ResultSet rs = ps.executeQuery();
@@ -99,7 +99,7 @@ public class ArticleDao implements IArticleDao {
     }
 
     @Override
-    public Blog getArticle(int id) throws ClassNotFoundException {
+    public Blog getArticle(String email, int id) throws ClassNotFoundException {
         Blog article = null;
 
         Connection con = null;
@@ -107,12 +107,16 @@ public class ArticleDao implements IArticleDao {
         Class.forName("org.hsqldb.jdbcDriver");
         try {
             con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003","SA","");
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM BLOG  WHERE ID = ?");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM BLOG WHERE ID = ?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             logger.debug("Requête DataBase : " + ps);
             if (rs.next()) {
                 article = createArticle(rs);
+                if (email.compareTo(article.getCreateur().getEmail()) != 0
+                && article.getStatut().getId() != 2) {
+                    article = null;
+                }
             }
             rs.close();
             con.close();

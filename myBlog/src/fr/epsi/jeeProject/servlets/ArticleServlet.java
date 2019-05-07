@@ -37,7 +37,8 @@ public class ArticleServlet extends HttpServlet {
         Reponse reponse = new Reponse();
         Blog article = null;
         try {
-            article = new ArticleDao().getArticle(Integer.parseInt(request.getParameter("blogId")));
+            article = new ArticleDao().getArticle((String) session.getAttribute("user_email")
+                                                    , Integer.parseInt(request.getParameter("blogId")));
             reponse.setBlog(article);
             reponse.setPublication(new Date(new java.util.Date().getTime()));
             reponse.setCommentaire(request.getParameter("comment"));
@@ -71,16 +72,22 @@ public class ArticleServlet extends HttpServlet {
             }
         } else {
             try {
-                Blog article = new ArticleDao().getArticle(Integer.parseInt(request.getParameter("id")));
-                article.setNbvues(article.getNbvues() + 1);
-                article.setDateModification(new Date(new java.util.Date().getTime()));
-                new ArticleDao().updateArticle(article);
-                request.setAttribute("article", article);
-                List<Reponse> reponseList = new ReponseDao().getAllReponseByBlog(article);
-                request.setAttribute("reponseList", reponseList);
-                int countReponse = new ReponseDao().countReponseByBlog(article);
-                request.setAttribute("nbComments", countReponse);
-                this.getServletContext().getRequestDispatcher("/Article.jsp").forward(request, response);
+                Blog article = new ArticleDao().getArticle((String) session.getAttribute("user_email")
+                                                            , Integer.parseInt(request.getParameter("id")));
+                if (article != null) {
+                    article.setNbvues(article.getNbvues() + 1);
+                    article.setDateModification(new Date(new java.util.Date().getTime()));
+                    new ArticleDao().updateArticle(article);
+                    request.setAttribute("article", article);
+                    List<Reponse> reponseList = new ReponseDao().getAllReponseByBlog(article);
+                    request.setAttribute("reponseList", reponseList);
+                    int countReponse = new ReponseDao().countReponseByBlog(article);
+                    request.setAttribute("nbComments", countReponse);
+                    this.getServletContext().getRequestDispatcher("/Article.jsp").forward(request, response);
+                } else {
+                    this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+                    return;
+                }
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }

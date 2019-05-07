@@ -27,7 +27,7 @@
           <% } %>
         </h1>
       </div>
-      <a href="/">Se déconnecter</a>
+      <a href="/myEpsi/ ">Se déconnecter</a>
     </div>
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -71,6 +71,8 @@
           <h2 class="astyle">
             <% if (email.compareTo(blog.getCreateur().getEmail()) != 0) { %>
               <i class="glyphicon glyphicon-user"></i>
+            <% } else if (blog.getStatut().getId() == 4) { %>
+              <i class="glyphicon glyphicon-remove"></i>
             <% } %>
             <a href="/myEpsi/Article?id=<%=blog.getId()%>"><% out.print(blog.getTitre()); %></a>
           </h2>

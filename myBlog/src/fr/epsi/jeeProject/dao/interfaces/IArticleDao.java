@@ -1,6 +1,7 @@
 package fr.epsi.jeeProject.dao.interfaces;
 
 import fr.epsi.jeeProject.beans.Blog;
+import fr.epsi.jeeProject.beans.Utilisateur;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +13,7 @@ public interface IArticleDao {
 
     List<Blog> getArticles() throws ClassNotFoundException;
 
-    Blog getArticle(int id) throws SQLException, ClassNotFoundException;
+    Blog getArticle(String email, int id) throws ClassNotFoundException;
 
     void createArticle(Blog blog) throws ClassNotFoundException;
 

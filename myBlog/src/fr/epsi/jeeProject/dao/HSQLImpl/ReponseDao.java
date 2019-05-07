@@ -122,7 +122,7 @@ public class ReponseDao implements IReponseDao {
         myReponse.setBlogger(new UtilisateurDao().getUtilisateur(rs.getString("email")));
         myReponse.setCommentaire(rs.getString("commentaire"));
         myReponse.setPublication(rs.getDate("date_creation"));
-        myReponse.setBlog(new ArticleDao().getArticle(rs.getInt("blog_id")));
+        myReponse.setBlog(new ArticleDao().getArticle(myReponse.getBlogger().getEmail(), rs.getInt("blog_id")));
         return myReponse;
     }
 }
