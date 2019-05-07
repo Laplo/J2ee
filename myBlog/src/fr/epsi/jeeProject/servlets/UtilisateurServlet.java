@@ -51,7 +51,8 @@ public class UtilisateurServlet extends HttpServlet {
 
                     List<Utilisateur> utilisateurs = new UtilisateurDao().getUtilisateurs();
                     for (Utilisateur utilisateur : utilisateurs) {
-                        if (utilisateur.getEmail().compareTo(u.getEmail()) == 0) {
+                        if (utilisateur.getEmail().compareTo(u.getEmail()) == 0
+                        && utilisateur.getEmail().compareTo(request.getParameter("oldEmail")) != 0) {
                             logger.error("Un utilisateur possède déjà cet email : "+u.getEmail());
                             response.sendRedirect("/myEpsi/Admin");
                             return;
