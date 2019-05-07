@@ -208,9 +208,10 @@ public class ArticleDao implements IArticleDao {
         try {
             con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003", "SA", "");
             PreparedStatement ps = con.prepareStatement("UPDATE BLOG SET TITRE = ?, DESCRIPTION = ?, DATE_MODIFICATION = ?, STATUT = ?, NBVUES = ? WHERE ID = ?");
+            Date date = new java.sql.Date(new java.util.Date().getTime());
             ps.setString(1,blog.getTitre());
             ps.setString(2,blog.getDescription());
-            ps.setDate(3,blog.getDateModification());
+            ps.setDate(3, date);
             ps.setInt(4,blog.getStatut().getId());
             ps.setInt(5,blog.getNbvues());
             ps.setInt(6,blog.getId());

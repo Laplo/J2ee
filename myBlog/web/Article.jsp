@@ -50,33 +50,33 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Créer un article</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Modifier un article</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float: right;">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="Blog" method="post">
+                                <form action="Article" method="post">
                                     <div>
                                         <label>Titre</label><br/>
                                         <label><input type="text" name="titre" id="titreId"/></label>
                                     </div>
                                     <br/>
+                                    <input name="blogId" value="<%out.print(blog.getId());%>" hidden />
                                     <div>
                                         <label>Description</label><br/>
                                         <label><textarea rows="5" cols="50" name="description" id="descriptionId"></textarea></label>
                                     </div>
                                     <br/>
                                     <br/>
-                                    <button type="submit" class="btn btn-primary">Ajouter</button>
-                                    <button data-dismiss="modal" class="btn btn-secondary">Annuler</button>
+                                    <button type="submit" class="btn btn-primary">Modifier</button>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
                 <button type="button" class="btn btn-primary"
-                        onclick="OnClickModify('<%out.println(blog.getTitre());%>', '<%out.println(blog.getDescription());%>');">
+                        onclick="OnClickModify('<%out.print(blog.getTitre());%>', '<%out.print(blog.getDescription());%>');">
                     Modifier
                 </button>
             <%}%>

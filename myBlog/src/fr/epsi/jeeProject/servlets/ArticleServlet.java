@@ -42,11 +42,17 @@ public class ArticleServlet extends HttpServlet {
             article = new ArticleDao().getArticle((String) session.getAttribute("user_email")
                                                     , Integer.parseInt(request.getParameter("blogId")));
             if (article != null) {
-                reponse.setBlog(article);
-                reponse.setPublication(new Date(new java.util.Date().getTime()));
-                reponse.setCommentaire(request.getParameter("comment"));
-                reponse.setBlogger(new UtilisateurDao().getUtilisateur(session.getAttribute("user_email").toString()));
-                new ReponseDao().createReponse(reponse);
+                if (request.getParameter("titre") != null && request.getParameter("description") != null) {
+                    article.setTitre(request.getParameter("titre"));
+                    article.setDescription(request.getParameter("description"));
+                    new ArticleDao().updateArticle(article);
+                } else {
+                    reponse.setBlog(article);
+                    reponse.setPublication(new Date(new java.util.Date().getTime()));
+                    reponse.setCommentaire(request.getParameter("comment"));
+                    reponse.setBlogger(new UtilisateurDao().getUtilisateur(session.getAttribute("user_email").toString()));
+                    new ReponseDao().createReponse(reponse);
+                }
             } else {
                 this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
                 return;

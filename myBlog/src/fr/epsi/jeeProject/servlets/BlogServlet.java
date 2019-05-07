@@ -36,7 +36,7 @@ public class BlogServlet extends HttpServlet {
         try {
             blog.setCreateur(new UtilisateurDao().getUtilisateur((String) request.getSession().getAttribute("user_email")));
             new ArticleDao().createArticle(blog);
-            articles = new ArticleDao().getArticles();
+            articles = new ArticleDao().getArticlesForFeed((String) request.getSession().getAttribute("user_email"));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
