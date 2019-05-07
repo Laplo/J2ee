@@ -6,6 +6,8 @@
 <!DOCTYPE html>
 <link href="blog.css" rel="stylesheet">
 <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,300,700' rel='stylesheet' type='text/css'>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <html>
 <% Blog blog = (Blog) request.getAttribute("article");
@@ -36,6 +38,48 @@
                 %>
             </p>
             <p class="text"><% out.print(blog.getDescription()); %></p>
+            <% if (blog.getStatut().getId() == 1) { %>
+            <a href="/myEpsi/Article?id=<%out.print(blog.getId());%>&publier=true">Publier</a>
+            <a href="/myEpsi/Article?id=<%out.print(blog.getId());%>&annuler=true">Annuler</a>
+            <% } else if(blog.getStatut() .getId()== 2) { %>
+                <a href="/myEpsi/Article?id=<%out.print(blog.getId());%>&archiver=true">Archiver</a>
+            <% }
+
+            if (blog.getStatut().getId() != 4) { %>
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Créer un article</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float: right;">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="Blog" method="post">
+                                    <div>
+                                        <label>Titre</label><br/>
+                                        <label><input type="text" name="titre" id="titreId"/></label>
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <label>Description</label><br/>
+                                        <label><textarea rows="5" cols="50" name="description" id="descriptionId"></textarea></label>
+                                    </div>
+                                    <br/>
+                                    <br/>
+                                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                                    <button data-dismiss="modal" class="btn btn-secondary">Annuler</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary"
+                        onclick="OnClickModify('<%out.println(blog.getTitre());%>', '<%out.println(blog.getDescription());%>');">
+                    Modifier
+                </button>
+            <%}%>
         </div>
     </div>
 </div>
@@ -76,3 +120,10 @@
 </div> <!-- container -->
 </body>
 </html>
+<script>
+    function OnClickModify(titre, description) {
+        document.getElementById('titreId').value = titre;
+        document.getElementById('descriptionId').value = description;
+        $('#exampleModal').modal('show');
+    }
+</script>

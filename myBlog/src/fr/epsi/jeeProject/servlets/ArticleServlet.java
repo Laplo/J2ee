@@ -2,8 +2,10 @@ package fr.epsi.jeeProject.servlets;
 
 import fr.epsi.jeeProject.beans.Blog;
 import fr.epsi.jeeProject.beans.Reponse;
+import fr.epsi.jeeProject.beans.Statut;
 import fr.epsi.jeeProject.dao.HSQLImpl.ArticleDao;
 import fr.epsi.jeeProject.dao.HSQLImpl.ReponseDao;
+import fr.epsi.jeeProject.dao.HSQLImpl.StatutDao;
 import fr.epsi.jeeProject.dao.HSQLImpl.UtilisateurDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,11 +41,16 @@ public class ArticleServlet extends HttpServlet {
         try {
             article = new ArticleDao().getArticle((String) session.getAttribute("user_email")
                                                     , Integer.parseInt(request.getParameter("blogId")));
-            reponse.setBlog(article);
-            reponse.setPublication(new Date(new java.util.Date().getTime()));
-            reponse.setCommentaire(request.getParameter("comment"));
-            reponse.setBlogger(new UtilisateurDao().getUtilisateur(session.getAttribute("user_email").toString()));
-            new ReponseDao().createReponse(reponse);
+            if (article != null) {
+                reponse.setBlog(article);
+                reponse.setPublication(new Date(new java.util.Date().getTime()));
+                reponse.setCommentaire(request.getParameter("comment"));
+                reponse.setBlogger(new UtilisateurDao().getUtilisateur(session.getAttribute("user_email").toString()));
+                new ReponseDao().createReponse(reponse);
+            } else {
+                this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+                return;
+            }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -70,20 +77,38 @@ public class ArticleServlet extends HttpServlet {
                 }
                 response.sendRedirect("/myEpsi/Admin");
             }
-        } else {
+        }
+        else {
             try {
                 Blog article = new ArticleDao().getArticle((String) session.getAttribute("user_email")
-                                                            , Integer.parseInt(request.getParameter("id")));
+                        , Integer.parseInt(request.getParameter("id")));
                 if (article != null) {
-                    article.setNbvues(article.getNbvues() + 1);
-                    article.setDateModification(new Date(new java.util.Date().getTime()));
-                    new ArticleDao().updateArticle(article);
-                    request.setAttribute("article", article);
-                    List<Reponse> reponseList = new ReponseDao().getAllReponseByBlog(article);
-                    request.setAttribute("reponseList", reponseList);
-                    int countReponse = new ReponseDao().countReponseByBlog(article);
-                    request.setAttribute("nbComments", countReponse);
-                    this.getServletContext().getRequestDispatcher("/Article.jsp").forward(request, response);
+                    if (request.getParameter("publier") != null) {
+                        article.setStatut(new StatutDao().getStatut(2));
+                        new ArticleDao().updateArticle(article);
+                        request.setAttribute("article", article);
+                        response.sendRedirect("/myEpsi/Article?id=" + article.getId());
+                    } else if (request.getParameter("annuler") != null) {
+                        article.setStatut(new StatutDao().getStatut(4));
+                        new ArticleDao().updateArticle(article);
+                        request.setAttribute("article", article);
+                        response.sendRedirect("/myEpsi/Article?id=" + article.getId());
+                    } else if(request.getParameter("archiver") != null) {
+                        article.setStatut(new StatutDao().getStatut(3));
+                        new ArticleDao().updateArticle(article);
+                        request.setAttribute("article", article);
+                        response.sendRedirect("/myEpsi/Article?id=" + article.getId());
+                    } else {
+                        article.setNbvues(article.getNbvues() + 1);
+                        article.setDateModification(new Date(new java.util.Date().getTime()));
+                        new ArticleDao().updateArticle(article);
+                        request.setAttribute("article", article);
+                        List<Reponse> reponseList = new ReponseDao().getAllReponseByBlog(article);
+                        request.setAttribute("reponseList", reponseList);
+                        int countReponse = new ReponseDao().countReponseByBlog(article);
+                        request.setAttribute("nbComments", countReponse);
+                        this.getServletContext().getRequestDispatcher("/Article.jsp").forward(request, response);
+                    }
                 } else {
                     this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
                     return;
