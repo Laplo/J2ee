@@ -13,7 +13,7 @@
   <title>EPSI Blog</title>
 </head>
 <body>
-  <%boolean isAdmin = (boolean) session.getAttribute("user_isAdmin");%>
+  <% boolean isAdmin = (boolean) session.getAttribute("user_isAdmin");%>
   <div class="wrapper">
     <div class="top">
       <div class="title">
@@ -27,6 +27,7 @@
           <% } %>
         </h1>
       </div>
+      <a href="/">Se déconnecter</a>
     </div>
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">

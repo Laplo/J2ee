@@ -9,6 +9,7 @@
     <title>MyEpsi</title>
   </head>
   <body>
+  <% session.setAttribute("user_email", null); %>
   <div class="form">
 
     <ul class="tab-group">

@@ -9,20 +9,16 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <html>
 <% Blog blog = (Blog) request.getAttribute("article");
-    String email = (String) session.getAttribute("user_email");
-    System.out.println("email article jsp");
-    System.out.println(email);
-    System.out.println("email article createur");
-    System.out.println(blog.getCreateur().getEmail());%>
+    String email = (String) session.getAttribute("user_email");%>
 <head>
     <title><% out.print(blog.getTitre());%></title>
 </head>
 <body>
 <div class="wrapper">
-    <div>
-        <a href="/myEpsi/Blog">Retour à la page d'accueil</a>
+    <div class="top">
+        <div><a href="/myEpsi/Blog">Retour à la page d'accueil</a></div>
+        <div class="title"><h1><% out.print(blog.getTitre());%></h1></div>
     </div>
-    <div class="top"><div class="title"><h1><% out.print(blog.getTitre());%></h1></div></div>
     <div class="content">
         <div class="card first">
             <h2 class="astyle"><% out.print(blog.getTitre()); %>
@@ -66,7 +62,8 @@
         <div class="col-sm-5">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <strong><%out.print(blog.getCreateur().getNom());%></strong> <span class="text-muted">commented <% out.print(reponse.getPublication()); %></span>
+                    <strong><% out.print(reponse.getBlogger().getNom()); %></strong> <span class="text-muted">commented
+                    <% out.print(formatter.format(reponse.getPublication())); %></span>
                 </div>
                 <div class="panel-body">
                     <% out.print(reponse.getCommentaire()); %>
