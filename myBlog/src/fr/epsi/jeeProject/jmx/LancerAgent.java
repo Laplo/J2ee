@@ -14,13 +14,12 @@ public class LancerAgent {
         MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
         ObjectName name = null;
         try {
-            name = new ObjectName("com.jmdoudoux.tests.jmx:type=PremierMBean");
-            Premier mbean = new Premier();
+            name = new ObjectName("fr.espi.jeeProject.jmx:type=LogMBean");
+            Log mbean = new Log();
             mbs.registerMBean(mbean, name);
             System.out.println("Lancement ...");
             while (true) {
                 Thread.sleep(1000);
-                mbean.setValeur(mbean.getValeur() + 1);
             }
         } catch (MalformedObjectNameException e) {
             e.printStackTrace();
