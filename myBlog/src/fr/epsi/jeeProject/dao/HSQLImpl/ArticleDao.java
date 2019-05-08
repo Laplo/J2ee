@@ -14,15 +14,17 @@ public class ArticleDao implements IArticleDao {
     private static final Logger logger = LogManager.getLogger(ArticleDao.class);
 
     @Override
-    public void countArticles() throws ClassNotFoundException {
+    public int countArticles() throws ClassNotFoundException {
         Connection con = null;
         Class.forName("org.hsqldb.jdbcDriver");
+        int countArt = 0;
         try{
             con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003","SA","");
             PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM BLOG");
             ResultSet rs = ps.executeQuery();
             logger.debug("Requête DataBase : " + ps);
             rs.next();
+            countArt = rs.getInt(1);
             logger.error("Nombre de posts présent en base : " + rs.getInt(1));
         } catch (SQLException e) {
             logger.error("Error while counting articles", e);
@@ -35,6 +37,8 @@ public class ArticleDao implements IArticleDao {
                 logger.warn("Error while closing connection");
             }
         }
+
+        return countArt;
     }
 
     @Override

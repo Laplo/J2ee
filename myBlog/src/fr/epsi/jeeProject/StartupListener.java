@@ -4,7 +4,7 @@ import fr.epsi.jeeProject.dao.HSQLImpl.ArticleDao;
 import fr.epsi.jeeProject.dao.HSQLImpl.UtilisateurDao;
 import fr.epsi.jeeProject.dao.interfaces.IArticleDao;
 import fr.epsi.jeeProject.dao.interfaces.IUtilisateurDao;
-import fr.epsi.jeeProject.jmx.Premier;
+import fr.epsi.jeeProject.jmx.Log;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,7 +32,7 @@ public class StartupListener implements ServletContextListener,
 
         try {
             name = new ObjectName("java.fr.epsi.jmx:type=PremierMBean");
-            Premier mbean = new Premier();
+            Log mbean = new Log();
 
             mbs.registerMBean(mbean, name);
         } catch (MalformedObjectNameException | NullPointerException | InstanceAlreadyExistsException | NotCompliantMBeanException | MBeanRegistrationException e) {

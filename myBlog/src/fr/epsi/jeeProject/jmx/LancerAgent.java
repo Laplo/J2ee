@@ -15,8 +15,13 @@ public class LancerAgent {
         ObjectName name = null;
         try {
             name = new ObjectName("fr.espi.jeeProject.jmx:type=LogMBean");
-            Log mbean = new Log();
-            mbs.registerMBean(mbean, name);
+            Log log = new Log();
+            mbs.registerMBean(log, name);
+
+            name = new ObjectName("fr.espi.jeeProject.jmx:type=PostMBean");
+            Post post = new Post();
+            mbs.registerMBean(post, name);
+
             System.out.println("Lancement ...");
             while (true) {
                 Thread.sleep(1000);
