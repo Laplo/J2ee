@@ -16,18 +16,20 @@
   <% boolean isAdmin = (boolean) session.getAttribute("user_isAdmin");%>
   <div class="wrapper">
     <div class="top">
+      <div>
+        <a href="/myEpsi/ ">Se déconnecter</a>
+        <% if (isAdmin) {%>
+        <a href="Admin"> - Partie admin</a>
+        <% } %>
+      </div>
       <div class="title">
         <h1>
           EPSI Blog
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="float: right;">
             Créer
           </button>
-          <% if (isAdmin) {%>
-          <a href="Admin">admin</a>
-          <% } %>
         </h1>
       </div>
-      <a href="/myEpsi/ ">Se déconnecter</a>
     </div>
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -68,7 +70,7 @@
         <% } else { %>
         <div class="card">
         <% } %>
-          <h2 class="astyle">
+          <h2 class="astyle" style="text-align: center">
             <% if (email.compareTo(blog.getCreateur().getEmail()) != 0) { %>
               <i class="glyphicon glyphicon-user"></i>
             <% } else if (blog.getStatut().getId() == 4) { %>
@@ -78,14 +80,18 @@
           </h2>
           <p class="date">
             <%
-              SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-              String date = formatter.format(blog.getDateModification());
-              out.print(date);
-              out.print(" - ");
+              out.print("Auteur : ");
               out.print(blog.getCreateur().getNom());
             %>
           </p>
-          <p class="text"><% out.print(blog.getDescription()); %></p>
+          <p class="date">
+            <%
+              SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+              String date = formatter.format(blog.getDateModification());
+              out.print("Dernière modfication : ");
+              out.print(date);
+            %>
+          </p>
         </div>
       </div>
     <% } %>

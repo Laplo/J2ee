@@ -35,6 +35,9 @@
                     out.print(date);
                     out.print(" - ");
                     out.print(blog.getCreateur().getNom());
+                    out.print(" - ");
+                    out.print(blog.getNbvues());
+                    out.print(" vues");
                 %>
             </p>
             <p class="text"><% out.print(blog.getDescription()); %></p>
