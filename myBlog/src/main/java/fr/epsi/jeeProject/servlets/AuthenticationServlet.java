@@ -39,7 +39,7 @@ public class AuthenticationServlet extends HttpServlet {
 
             List<Utilisateur> utilisateurs = new UtilisateurDao().getUtilisateurs();
             for (Utilisateur utilisateur : utilisateurs) {
-                if (utilisateur.getEmail().compareTo(user.getEmail()) == 0) {
+                if (utilisateur.getEmail().equals(user.getEmail())) {
                     logger.error("Un utilisateur possède déjà cet email");
                     request.setAttribute("errorMessageSignUpEM", "Already used email address");
                     error = true;

@@ -118,8 +118,9 @@ public class UtilisateurDao implements IUtilisateurDao {
     }
 
     @Override
-    public void createUtilisateur(Utilisateur utilisateur) throws ClassNotFoundException {
+    public int createUtilisateur(Utilisateur utilisateur) throws ClassNotFoundException {
         Connection con = null;
+        int resultInsert = 0;
         Class.forName("org.hsqldb.jdbcDriver");
         try {
             con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003", "SA", "");
@@ -131,7 +132,8 @@ public class UtilisateurDao implements IUtilisateurDao {
             ps.setString(4,utilisateur.getPassword());
             ps.setBoolean(5,utilisateur.getAdmin());
             logger.debug("Requête DataBase : " + ps);
-            if (ps.executeUpdate() == 1) {
+            resultInsert = ps.executeUpdate();
+            if (resultInsert == 1) {
                 logger.info("Utilisateur " + utilisateur.getEmail() + " correctement inseré dans la base.");
             } else {
                 logger.error("Erreur pendant l'insertion de l'utilisateur " + utilisateur.getEmail() + ".");
@@ -148,6 +150,7 @@ public class UtilisateurDao implements IUtilisateurDao {
                 logger.warn("Error while closing connection");
             }
         }
+        return resultInsert;
     }
 
     @Override
@@ -185,8 +188,8 @@ public class UtilisateurDao implements IUtilisateurDao {
     }
 
     @Override
-    public boolean deleteUtilisateur(Utilisateur utilisateur) throws ClassNotFoundException {
-        boolean error = false;
+    public int deleteUtilisateur(Utilisateur utilisateur) throws ClassNotFoundException {
+        int resultDelete = 0;
         if (!getUtilisateur(utilisateur.getEmail()).getAdmin()) {
             Connection con = null;
             try {
@@ -194,15 +197,14 @@ public class UtilisateurDao implements IUtilisateurDao {
                 PreparedStatement ps = con.prepareStatement("DELETE FROM USERS WHERE EMAIL = ?");
                 ps.setString(1, utilisateur.getEmail());
                 logger.debug("Requête DataBase : " + ps);
-                if (ps.executeUpdate() == 1) {
+                resultDelete = ps.executeUpdate();
+                if (resultDelete == 1) {
                     logger.info("Utilisateur " + utilisateur.getEmail() + " correctement supprimé.");
                 } else {
                     logger.error("Erreur pendant la suppression de l'utilisateur " + utilisateur.getEmail() + ".");
-                    error = true;
                 }
             } catch (SQLException e) {
                 logger.error("Error while deleting user " + utilisateur.getEmail(), e);
-                error = true;
             } finally {
                 try {
                     if (con != null && !con.isClosed()) {
@@ -214,9 +216,8 @@ public class UtilisateurDao implements IUtilisateurDao {
             }
         } else {
             logger.error("Impossible de supprimer un administrateur");
-            error = true;
         }
-        return error;
+        return resultDelete;
     }
 
     @Override

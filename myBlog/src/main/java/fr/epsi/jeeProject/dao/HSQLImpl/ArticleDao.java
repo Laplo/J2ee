@@ -1,6 +1,7 @@
 package fr.epsi.jeeProject.dao.HSQLImpl;
 
 import fr.epsi.jeeProject.beans.Blog;
+import fr.epsi.jeeProject.beans.Utilisateur;
 import fr.epsi.jeeProject.dao.interfaces.IArticleDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -171,30 +172,36 @@ public class ArticleDao implements IArticleDao {
     }
 
     @Override
-    public void deleteArticle (int id) throws ClassNotFoundException {
-        Connection con = null;
-        Class.forName("org.hsqldb.jdbcDriver");
-        try {
-            con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003", "SA", "");
-            PreparedStatement ps = con.prepareStatement("DELETE FROM BLOG WHERE ID = ?");
-            ps.setInt(1, id);
-            logger.debug("Requête DataBase : " + ps);
-            if (ps.executeUpdate() == 1) {
-                logger.info("Blog " + id + " correctement supprimé");
-            } else {
-                logger.error("Erreur pendant la suppression du blog " + id + ".");
-            }
-        } catch (SQLException e) {
-            logger.error("Error while getting articles ", e);
-        } finally {
+    public int deleteArticle(int id, Utilisateur user) throws ClassNotFoundException {
+        int resultDelete = 0;
+        String emailAuthor = getArticle(user.getEmail(), id).getCreateur().getEmail();
+        if (emailAuthor.equals(user.getEmail())) {
+            Connection con = null;
+            Class.forName("org.hsqldb.jdbcDriver");
             try {
-                if (con != null && !con.isClosed()) {
-                    con.close();
+                con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003", "SA", "");
+                PreparedStatement ps = con.prepareStatement("DELETE FROM BLOG WHERE ID = ?");
+                ps.setInt(1, id);
+                logger.debug("Requête DataBase : " + ps);
+                resultDelete = ps.executeUpdate();
+                if (resultDelete == 1) {
+                    logger.info("Blog " + id + " correctement supprimé");
+                } else {
+                    logger.error("Erreur pendant la suppression du blog " + id + ".");
                 }
-            } catch (Exception e) {
-                logger.warn("Error while closing connection");
+            } catch (SQLException e) {
+                logger.error("Error while getting articles ", e);
+            } finally {
+                try {
+                    if (con != null && !con.isClosed()) {
+                        con.close();
+                    }
+                } catch (Exception e) {
+                    logger.warn("Error while closing connection");
+                }
             }
         }
+        return resultDelete;
     }
 
     @Override

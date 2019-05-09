@@ -12,9 +12,9 @@ public interface IUtilisateurDao {
 	List<Utilisateur> getUtilisateurs() throws ClassNotFoundException;
 	List<Utilisateur> getNonAdminUtilisateurs() throws ClassNotFoundException;
 	Utilisateur getUtilisateur(String email) throws ClassNotFoundException;
-	void createUtilisateur(Utilisateur utilisateur) throws ClassNotFoundException;
+	int createUtilisateur(Utilisateur utilisateur) throws ClassNotFoundException;
 	void updateUtilisateur(Utilisateur utilisateur, String oldEmail) throws ClassNotFoundException;
-	boolean deleteUtilisateur(Utilisateur utilisateur) throws ClassNotFoundException;
+	int deleteUtilisateur(Utilisateur utilisateur) throws ClassNotFoundException;
 
 	Utilisateur createUtilisateur(ResultSet rs) throws SQLException;
 }
