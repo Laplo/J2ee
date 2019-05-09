@@ -28,6 +28,6 @@ public class TestUtilisateurServlet extends BasicServletTestCaseAdapter {
         setSessionAttribute("user_isAdmin", true);
         addRequestParameter("delete", "contact@aquasys.fr");
         doGet();
-        assertTrue((Boolean) getRequestAttribute("resultDelete"));
+        assertEquals(0, getRequestAttribute("resultDelete"));
     }
 }
