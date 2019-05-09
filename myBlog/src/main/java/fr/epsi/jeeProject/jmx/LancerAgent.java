@@ -12,7 +12,7 @@ import javax.management.ObjectName;
 public class LancerAgent {
     public static void main(String[] args) {
         MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
-        ObjectName name = null;
+        ObjectName name;
         try {
             name = new ObjectName("fr.espi.jeeProject.jmx:type=LogMBean");
             Log log = new Log();
@@ -26,17 +26,8 @@ public class LancerAgent {
             while (true) {
                 Thread.sleep(1000);
             }
-        } catch (MalformedObjectNameException e) {
+        } catch (MalformedObjectNameException | NullPointerException | InstanceAlreadyExistsException | MBeanRegistrationException | NotCompliantMBeanException | InterruptedException e) {
             e.printStackTrace();
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        } catch (InstanceAlreadyExistsException e) {
-            e.printStackTrace();
-        } catch (MBeanRegistrationException e) {
-            e.printStackTrace();
-        } catch (NotCompliantMBeanException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
         }
     }
 }

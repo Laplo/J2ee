@@ -24,7 +24,7 @@
     <div class="content">
         <div class="card first">
             <h2 class="astyle"><% out.print(blog.getTitre()); %>
-                <% if (email.compareTo(blog.getCreateur().getEmail()) != 0) { %>
+                <% if (email.equals(blog.getCreateur().getEmail())) { %>
                     <i class="glyphicon glyphicon-user" style="float: right"></i>
                 <% } %>
             </h2>
@@ -41,7 +41,10 @@
                 %>
             </p>
             <p class="text"><% out.print(blog.getDescription()); %></p>
-            <% if (blog.getStatut().getId() == 1) { %>
+            <%
+                if (blog.getCreateur().getEmail().equals(session.getAttribute("user_email").toString())){
+
+                if (blog.getStatut().getId() == 1) { %>
             <a href="/myEpsi/Article?id=<%out.print(blog.getId());%>&publier=true">Publier</a>
             <a href="/myEpsi/Article?id=<%out.print(blog.getId());%>&annuler=true">Annuler</a>
             <% } else if(blog.getStatut() .getId()== 2) { %>
@@ -82,7 +85,9 @@
                         onclick="OnClickModify('<%out.print(blog.getTitre());%>', '<%out.print(blog.getDescription());%>');">
                     Modifier
                 </button>
-            <%}%>
+            <%}
+
+            }%>
         </div>
     </div>
 </div>

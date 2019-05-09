@@ -45,6 +45,7 @@ public class ArticleServlet extends HttpServlet {
                 if (request.getParameter("titre") != null && request.getParameter("description") != null) {
                     article.setTitre(request.getParameter("titre"));
                     article.setDescription(request.getParameter("description"));
+                    article.setDateModification(new Date(new java.util.Date().getTime()));
                     new ArticleDao().updateArticle(article);
                 } else {
                     reponse.setBlog(article);
@@ -66,62 +67,58 @@ public class ArticleServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         logger.info("Execution doGet " + this.getClass().toString());
         HttpSession session = request.getSession();
-        if(session.getAttribute("user_email") == null) {
+        if (session.getAttribute("user_email") == null) {
             this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
             return;
         }
-        if (request.getParameter("id") == null) {
-            if (request.getParameter("delete") != null) {
-                if (!(boolean) session.getAttribute("user_isAdmin")) {
-                    this.getServletContext().getRequestDispatcher("/NotAccess.jsp").forward(request, response);
-                    return;
-                }
-                try {
-                    new ArticleDao().deleteArticle(Integer.parseInt(request.getParameter("delete")));
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-                response.sendRedirect("/myEpsi/Admin");
-            }
-        }
-        else {
+        if (request.getParameter("id") != null) {
             try {
-                Blog article = new ArticleDao().getArticle((String) session.getAttribute("user_email")
+                Blog article = new ArticleDao().getArticle(session.getAttribute("user_email").toString()
                         , Integer.parseInt(request.getParameter("id")));
                 if (article != null) {
-                    if (request.getParameter("publier") != null) {
-                        article.setStatut(new StatutDao().getStatut(2));
-                        new ArticleDao().updateArticle(article);
-                        request.setAttribute("article", article);
-                        response.sendRedirect("/myEpsi/Article?id=" + article.getId());
-                    } else if (request.getParameter("annuler") != null) {
-                        article.setStatut(new StatutDao().getStatut(4));
-                        new ArticleDao().updateArticle(article);
-                        request.setAttribute("article", article);
-                        response.sendRedirect("/myEpsi/Article?id=" + article.getId());
-                    } else if(request.getParameter("archiver") != null) {
-                        article.setStatut(new StatutDao().getStatut(3));
-                        new ArticleDao().updateArticle(article);
-                        request.setAttribute("article", article);
-                        response.sendRedirect("/myEpsi/Article?id=" + article.getId());
+                    if (article.getCreateur().getEmail().equals(session.getAttribute("user_email").toString())) {
+                        if (request.getParameter("publier") != null) {
+                            article.setStatut(new StatutDao().getStatut(2));
+                            article.setDateModification(new Date(new java.util.Date().getTime()));
+                            new ArticleDao().updateArticle(article);
+                            request.setAttribute("article", article);
+                            response.sendRedirect("/myEpsi/Article?id=" + article.getId());
+                        } else if (request.getParameter("annuler") != null) {
+                            article.setStatut(new StatutDao().getStatut(4));
+                            article.setDateModification(new Date(new java.util.Date().getTime()));
+                            new ArticleDao().updateArticle(article);
+                            request.setAttribute("article", article);
+                            response.sendRedirect("/myEpsi/Article?id=" + article.getId());
+                        } else if (request.getParameter("archiver") != null) {
+                            article.setStatut(new StatutDao().getStatut(3));
+                            article.setDateModification(new Date(new java.util.Date().getTime()));
+                            new ArticleDao().updateArticle(article);
+                            request.setAttribute("article", article);
+                            response.sendRedirect("/myEpsi/Article?id=" + article.getId());
+                        }
+                        else {
+                            redirectArticle(request, response, article);
+                        }
                     } else {
                         article.setNbvues(article.getNbvues() + 1);
-                        article.setDateModification(new Date(new java.util.Date().getTime()));
                         new ArticleDao().updateArticle(article);
-                        request.setAttribute("article", article);
-                        List<Reponse> reponseList = new ReponseDao().getAllReponseByBlog(article);
-                        request.setAttribute("reponseList", reponseList);
-                        int countReponse = new ReponseDao().countReponseByBlog(article);
-                        request.setAttribute("nbComments", countReponse);
-                        this.getServletContext().getRequestDispatcher("/Article.jsp").forward(request, response);
+                        redirectArticle(request, response, article);
                     }
                 } else {
-                    this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
-                    return;
+                    response.sendRedirect("/myEpsi/Blog");
                 }
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void redirectArticle(HttpServletRequest request, HttpServletResponse response, Blog article) throws ClassNotFoundException, ServletException, IOException {
+        request.setAttribute("article", article);
+        List<Reponse> reponseList = new ReponseDao().getAllReponseByBlog(article);
+        request.setAttribute("reponseList", reponseList);
+        int countReponse = new ReponseDao().countReponseByBlog(article);
+        request.setAttribute("nbComments", countReponse);
+        this.getServletContext().getRequestDispatcher("/Article.jsp").forward(request, response);
     }
 }

@@ -63,7 +63,8 @@
     <% List<Blog> blogs = (List<Blog>) request.getAttribute("articles");
       String email = (String) session.getAttribute("user_email");
       for (int i = 0; i < blogs.size(); i++) {
-      Blog blog = blogs.get(i); %>
+      Blog blog = blogs.get(i);
+      %>
       <div class="content">
         <% if (i == 0) { %>
         <div class="card first">
@@ -71,7 +72,7 @@
         <div class="card">
         <% } %>
           <h2 class="astyle" style="text-align: center">
-            <% if (email.compareTo(blog.getCreateur().getEmail()) != 0) { %>
+            <% if (!email.equals(blog.getCreateur().getEmail())) { %>
               <i class="glyphicon glyphicon-user"></i>
             <% } else if (blog.getStatut().getId() == 4) { %>
               <i class="glyphicon glyphicon-remove"></i>

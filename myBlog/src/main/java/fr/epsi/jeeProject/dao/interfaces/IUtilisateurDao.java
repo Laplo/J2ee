@@ -14,7 +14,7 @@ public interface IUtilisateurDao {
 	Utilisateur getUtilisateur(String email) throws ClassNotFoundException;
 	void createUtilisateur(Utilisateur utilisateur) throws ClassNotFoundException;
 	void updateUtilisateur(Utilisateur utilisateur, String oldEmail) throws ClassNotFoundException;
-	void deleteUtilisateur(Utilisateur utilisateur);
+	boolean deleteUtilisateur(Utilisateur utilisateur) throws ClassNotFoundException;
 
 	Utilisateur createUtilisateur(ResultSet rs) throws SQLException;
 }

@@ -10,7 +10,7 @@ import org.apache.logging.log4j.core.config.LoggerConfig;
 public class Log implements LogMBean {
     private static final Logger logger = LogManager.getLogger(Log.class);
     private LoggerConfig loggerConfig;
-    LoggerContext ctx;
+    private LoggerContext ctx;
 
     public Log() {
         ctx = (LoggerContext) LogManager.getContext(false);

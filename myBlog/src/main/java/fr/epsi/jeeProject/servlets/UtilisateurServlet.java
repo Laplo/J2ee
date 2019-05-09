@@ -71,7 +71,7 @@ public class UtilisateurServlet extends HttpServlet {
         logger.info("Execution doGet " + this.getClass().toString());
         HttpSession session = request.getSession();
 
-        if(session.getAttribute("user_email") == null) {
+        if (session.getAttribute("user_email") == null) {
             this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
             return;
         }
@@ -83,7 +83,12 @@ public class UtilisateurServlet extends HttpServlet {
 
         if (request.getParameter("delete") != null) {
             logger.info("Suppression de l'utilsateur : " + request.getParameter("delete"));
-            new UtilisateurDao().deleteUtilisateur(new Utilisateur(request.getParameter("delete")));
+            try {
+                request.setAttribute("resultDelete",
+                        new UtilisateurDao().deleteUtilisateur(new Utilisateur(request.getParameter("delete"))));
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
             response.sendRedirect("/myEpsi/Admin");
         }
     }

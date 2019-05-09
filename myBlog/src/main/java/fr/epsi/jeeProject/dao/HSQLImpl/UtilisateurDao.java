@@ -185,29 +185,38 @@ public class UtilisateurDao implements IUtilisateurDao {
     }
 
     @Override
-    public void deleteUtilisateur(Utilisateur utilisateur) {
-        Connection con = null;
-        try {
-            con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003", "SA", "");
-            PreparedStatement ps = con.prepareStatement("DELETE FROM USERS WHERE EMAIL = ?");
-            ps.setString(1,utilisateur.getEmail());
-            logger.debug("Requête DataBase : " + ps);
-            if (ps.executeUpdate() == 1) {
-                logger.info("Utilisateur " + utilisateur.getEmail() + " correctement supprimé.");
-            } else {
-                logger.error("Erreur pendant la suppression de l'utilisateur " + utilisateur.getEmail() + ".");
-            }
-        } catch (SQLException e) {
-            logger.error("Error while getting user " + utilisateur.getEmail(), e);
-        } finally {
+    public boolean deleteUtilisateur(Utilisateur utilisateur) throws ClassNotFoundException {
+        boolean error = false;
+        if (!getUtilisateur(utilisateur.getEmail()).getAdmin()) {
+            Connection con = null;
             try {
-                if (con != null && !con.isClosed()) {
-                    con.close();
+                con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003", "SA", "");
+                PreparedStatement ps = con.prepareStatement("DELETE FROM USERS WHERE EMAIL = ?");
+                ps.setString(1, utilisateur.getEmail());
+                logger.debug("Requête DataBase : " + ps);
+                if (ps.executeUpdate() == 1) {
+                    logger.info("Utilisateur " + utilisateur.getEmail() + " correctement supprimé.");
+                } else {
+                    logger.error("Erreur pendant la suppression de l'utilisateur " + utilisateur.getEmail() + ".");
+                    error = true;
                 }
-            } catch (Exception e) {
-                logger.warn("Error while closing connection");
+            } catch (SQLException e) {
+                logger.error("Error while deleting user " + utilisateur.getEmail(), e);
+                error = true;
+            } finally {
+                try {
+                    if (con != null && !con.isClosed()) {
+                        con.close();
+                    }
+                } catch (Exception e) {
+                    logger.warn("Error while closing connection");
+                }
             }
+        } else {
+            logger.error("Impossible de supprimer un administrateur");
+            error = true;
         }
+        return error;
     }
 
     @Override

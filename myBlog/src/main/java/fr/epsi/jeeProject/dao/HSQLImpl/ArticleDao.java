@@ -25,7 +25,7 @@ public class ArticleDao implements IArticleDao {
             logger.debug("Requête DataBase : " + ps);
             rs.next();
             countArt = rs.getInt(1);
-            logger.error("Nombre de posts présent en base : " + rs.getInt(1));
+            logger.error("Nombre de posts présent en base : " + countArt);
         } catch (SQLException e) {
             logger.error("Error while counting articles", e);
         } finally {
@@ -37,7 +37,6 @@ public class ArticleDao implements IArticleDao {
                 logger.warn("Error while closing connection");
             }
         }
-
         return countArt;
     }
 
@@ -105,9 +104,7 @@ public class ArticleDao implements IArticleDao {
     @Override
     public Blog getArticle(String email, int id) throws ClassNotFoundException {
         Blog article = null;
-
         Connection con = null;
-
         Class.forName("org.hsqldb.jdbcDriver");
         try {
             con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003","SA","");
@@ -117,7 +114,7 @@ public class ArticleDao implements IArticleDao {
             logger.debug("Requête DataBase : " + ps);
             if (rs.next()) {
                 article = createArticle(rs);
-                if (email.compareTo(article.getCreateur().getEmail()) != 0
+                if (!email.equals(article.getCreateur().getEmail())
                 && article.getStatut().getId() != 2) {
                     article = null;
                 }
@@ -141,10 +138,7 @@ public class ArticleDao implements IArticleDao {
 
     @Override
     public void createArticle(Blog blog) throws ClassNotFoundException {
-        List<Blog> articles = new ArrayList<>();
-
         Connection con = null;
-
         Class.forName("org.hsqldb.jdbcDriver");
         try {
             con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003", "SA", "");
@@ -178,9 +172,7 @@ public class ArticleDao implements IArticleDao {
 
     @Override
     public void deleteArticle (int id) throws ClassNotFoundException {
-
         Connection con = null;
-
         Class.forName("org.hsqldb.jdbcDriver");
         try {
             con = DriverManager.getConnection("jdbc:hsqldb:hsql://127.0.0.1:9003", "SA", "");
