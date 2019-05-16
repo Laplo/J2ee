@@ -3,6 +3,7 @@ package fr.epsi.jeeProject.servlets;
 import fr.epsi.jeeProject.beans.Blog;
 import fr.epsi.jeeProject.beans.Reponse;
 import fr.epsi.jeeProject.beans.Statut;
+import fr.epsi.jeeProject.beans.Utilisateur;
 import fr.epsi.jeeProject.dao.HSQLImpl.ArticleDao;
 import fr.epsi.jeeProject.dao.HSQLImpl.ReponseDao;
 import fr.epsi.jeeProject.dao.HSQLImpl.StatutDao;
@@ -110,6 +111,14 @@ public class ArticleServlet extends HttpServlet {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
+        } else if(request.getParameter("delete") != null) {
+            try {
+                new ArticleDao().deleteArticle(Integer.parseInt(request.getParameter("delete"))
+                                                , new UtilisateurDao().getUtilisateur((String) session.getAttribute("user_email")));
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            response.sendRedirect("/myEpsi/Admin");
         }
     }
 
