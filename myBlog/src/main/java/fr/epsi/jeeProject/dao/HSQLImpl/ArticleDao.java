@@ -175,7 +175,7 @@ public class ArticleDao implements IArticleDao {
     public int deleteArticle(int id, Utilisateur user) throws ClassNotFoundException {
         int resultDelete = 0;
         String emailAuthor = getArticle(user.getEmail(), id).getCreateur().getEmail();
-        if (emailAuthor.equals(user.getEmail())) {
+        if (emailAuthor.equals(user.getEmail()) || user.getAdmin()) {
             Connection con = null;
             Class.forName("org.hsqldb.jdbcDriver");
             try {
